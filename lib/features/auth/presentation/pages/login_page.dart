@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../providers/auth_notifier.dart';
-import '../providers/auth_state.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/brand_logo.dart';
 
-class LoginPage extends ConsumerStatefulWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  ConsumerState<LoginPage> createState() => _LoginPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends ConsumerState<LoginPage> {
+class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
@@ -29,29 +26,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     super.dispose();
   }
 
-  void _submit() {
-    ref
-        .read(authNotifierProvider.notifier)
-        .signIn(
-          email: _emailController.text.trim(),
-          password: _passwordController.text,
-        );
-  }
+  void _submit() => context.go(AppRoutes.home);
 
   @override
   Widget build(BuildContext context) {
-    // Show a snackbar whenever the state transitions into an error.
-    ref.listen<AuthState>(authNotifierProvider, (previous, next) {
-      if (next is AuthError) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(next.message)));
-      }
-    });
-
-    final state = ref.watch(authNotifierProvider);
-    final isLoading = state is AuthLoading;
-
     return Scaffold(
       backgroundColor: AppColors.loginBackground,
       body: SafeArea(
@@ -61,10 +39,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             Align(
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 24.w,
-                  vertical: 20.h,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
                 child: IconButton(
                   onPressed: () => Navigator.of(context).maybePop(),
                   padding: EdgeInsets.zero,
@@ -102,11 +77,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     icon: Icons.vpn_key_outlined,
                     obscureText: _obscurePassword,
                     textInputAction: TextInputAction.done,
-                    onSubmitted: (_) => isLoading ? null : _submit(),
+                    onSubmitted: (_) => _submit(),
                     suffix: IconButton(
-                      onPressed: () => setState(
-                        () => _obscurePassword = !_obscurePassword,
-                      ),
+                      onPressed: () =>
+                          setState(() => _obscurePassword = !_obscurePassword),
                       icon: Icon(
                         _obscurePassword
                             ? Icons.visibility_off_outlined
@@ -136,7 +110,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   SizedBox(
                     height: 50.h,
                     child: ElevatedButton(
-                      onPressed: isLoading ? null : _submit,
+                      onPressed: _submit,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.accentPurple,
                         disabledBackgroundColor: AppColors.accentPurple
@@ -147,22 +121,13 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           borderRadius: BorderRadius.circular(100.r),
                         ),
                       ),
-                      child: isLoading
-                          ? SizedBox(
-                              height: 20.h,
-                              width: 20.h,
-                              child: const CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: AppColors.whiteColor,
-                              ),
-                            )
-                          : Text(
-                              'Login',
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ),
                   ),
                   SizedBox(height: 16.h),

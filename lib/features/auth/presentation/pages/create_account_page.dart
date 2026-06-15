@@ -40,7 +40,9 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     // TODO: wire up the register use case.
     final setupNow = await AccountCreatedDialog.show(context);
     if (setupNow == null || !mounted) return;
-    // TODO: navigate to profile setup when `setupNow` is true.
+    if (setupNow) {
+      context.push(AppRoutes.profileInformation);
+    }
   }
 
   @override
