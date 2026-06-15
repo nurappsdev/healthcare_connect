@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/app_router.dart';
@@ -32,33 +33,33 @@ class _SignupPageState extends State<SignupPage> {
           children: [
             // Back button
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 14.h),
               child: IconButton(
                 onPressed: () => Navigator.of(context).maybePop(),
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),
-                icon: const Icon(
+                icon: Icon(
                   Icons.chevron_left,
                   color: AppColors.whiteColor,
-                  size: 28,
+                  size: 28.r,
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(24, 8, 24, 0),
+              padding: EdgeInsets.fromLTRB(24.w, 8.h, 24.w, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Are you looking for new Opportunities',
                     style: TextStyle(
                       color: AppColors.accentTeal,
-                      fontSize: 20,
+                      fontSize: 20.sp,
                       fontWeight: FontWeight.w400,
                       height: 1.2,
                     ),
                   ),
-                  const SizedBox(height: 28),
+                  SizedBox(height: 28.h),
                   _RoleCard(
                     title: 'Yes, I am actively looking for',
                     description:
@@ -67,7 +68,7 @@ class _SignupPageState extends State<SignupPage> {
                     selected: _selectedRole == SignupRole.lookingForWork,
                     onTap: () => _selectRole(SignupRole.lookingForWork),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
                   _RoleCard(
                     title: 'Im open job for seeking',
                     description:
@@ -76,7 +77,7 @@ class _SignupPageState extends State<SignupPage> {
                     selected: _selectedRole == SignupRole.hiring,
                     onTap: () => _selectRole(SignupRole.hiring),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
                   _RoleCard(
                     title: 'Im open teaching',
                     description:
@@ -114,10 +115,10 @@ class _RoleCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(20.r),
         decoration: BoxDecoration(
           color: selected ? AppColors.accentPurple : Colors.transparent,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10.r),
           border: selected
               ? null
               : Border.all(color: AppColors.cardBorderColor),
@@ -127,18 +128,18 @@ class _RoleCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppColors.whiteColor,
-                fontSize: 16,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
             Text(
               description,
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppColors.whiteColor,
-                fontSize: 13,
+                fontSize: 13.sp,
                 fontWeight: FontWeight.w400,
                 height: 1.3,
               ),

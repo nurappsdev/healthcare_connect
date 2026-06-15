@@ -4,10 +4,10 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 import '../../../../core/theme/app_colors.dart';
 
-class PrivacyPolicyPage extends StatelessWidget {
-  const PrivacyPolicyPage({super.key, this.html});
+class TermsOfServicePage extends StatelessWidget {
+  const TermsOfServicePage({super.key, this.html});
 
-  /// Policy markup to render. Falls back to [_defaultPolicyHtml] when null,
+  /// Terms markup to render. Falls back to [_defaultTermsHtml] when null,
   /// so the screen can be shown before content is loaded from the backend.
   final String? html;
 
@@ -35,7 +35,7 @@ class PrivacyPolicyPage extends StatelessWidget {
                   ),
                   Expanded(
                     child: Text(
-                      'Privacy Policy',
+                      'Terms of Service',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.whiteColor,
@@ -61,7 +61,7 @@ class PrivacyPolicyPage extends StatelessWidget {
               child: SingleChildScrollView(
                 padding: EdgeInsets.fromLTRB(24.w, 8.h, 24.w, 24.h),
                 child: HtmlWidget(
-                  html ?? _defaultPolicyHtml,
+                  html ?? _defaultTermsHtml,
                   textStyle: TextStyle(
                     color: AppColors.whiteColor,
                     fontSize: 14.sp,
@@ -88,49 +88,65 @@ class PrivacyPolicyPage extends StatelessWidget {
   }
 }
 
-const String _defaultPolicyHtml = '''
-<h2>Privacy Policy</h2>
+const String _defaultTermsHtml = '''
+<h2>Terms of Service</h2>
 <p>Last updated: June 2026</p>
 <p>
-  Healthcare Hub ("we", "our", or "us") is committed to protecting your privacy.
-  This Privacy Policy explains how we collect, use, and safeguard your
-  information when you use our application.
+  Welcome to Healthcare Hub. These Terms of Service ("Terms") govern your access
+  to and use of our application. By creating an account or using the service, you
+  agree to be bound by these Terms.
 </p>
 
-<h3>1. Information We Collect</h3>
+<h3>1. Acceptance of Terms</h3>
 <p>
-  We collect information you provide directly, such as your name, email address,
-  phone number, and professional details when you create an account.
+  By accessing or using the application, you confirm that you can form a binding
+  contract with us and that you accept these Terms and agree to comply with them.
 </p>
 
-<h3>2. How We Use Your Information</h3>
+<h3>2. Use of the Service</h3>
 <p>
-  We use the information we collect to operate, maintain, and provide the
-  features and functionality of the service, as well as to communicate with you.
+  You agree to use the service only for lawful purposes and in accordance with
+  these Terms. You are responsible for keeping your account credentials secure and
+  for all activity that occurs under your account.
 </p>
 
-<h3>3. Sharing of Information</h3>
+<h3>3. User Responsibilities</h3>
 <p>
-  We do not sell your personal information. We may share information with trusted
-  partners who assist us in operating the application, subject to confidentiality
-  obligations.
+  You agree to provide accurate, current, and complete information during
+  registration and to keep it up to date. You must not misuse the service or
+  interfere with its normal operation.
 </p>
 
-<h3>4. Data Security</h3>
+<h3>4. Intellectual Property</h3>
 <p>
-  We implement appropriate technical and organizational measures to protect your
-  personal data against unauthorized access, alteration, or disclosure.
+  All content, features, and functionality of the application are owned by
+  Healthcare Hub and are protected by applicable intellectual property laws. You
+  may not copy, modify, or distribute any part of the service without permission.
 </p>
 
-<h3>5. Your Rights</h3>
+<h3>5. Termination</h3>
 <p>
-  You may access, update, or delete your personal information at any time through
-  your account settings, or by contacting us.
+  We may suspend or terminate your access to the service at any time, without prior
+  notice, if you breach these Terms or engage in conduct that we consider harmful
+  to the service or other users.
 </p>
 
-<h3>6. Contact Us</h3>
+<h3>6. Limitation of Liability</h3>
 <p>
-  If you have any questions about this Privacy Policy, please contact us at
+  The service is provided "as is" without warranties of any kind. To the fullest
+  extent permitted by law, Healthcare Hub shall not be liable for any indirect or
+  consequential damages arising from your use of the service.
+</p>
+
+<h3>7. Changes to These Terms</h3>
+<p>
+  We may update these Terms from time to time. Continued use of the service after
+  any changes constitutes your acceptance of the revised Terms.
+</p>
+
+<h3>8. Contact Us</h3>
+<p>
+  If you have any questions about these Terms, please contact us at
   <a href="mailto:support@healthcarehub.app">support@healthcarehub.app</a>.
 </p>
 ''';

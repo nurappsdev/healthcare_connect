@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../widgets/auth_text_field.dart';
@@ -37,26 +38,26 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           children: [
             // Top bar: back, centered title, menu
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 14.h),
               child: Row(
                 children: [
                   IconButton(
                     onPressed: () => Navigator.of(context).maybePop(),
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(),
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.chevron_left,
                       color: AppColors.whiteColor,
-                      size: 28,
+                      size: 28.r,
                     ),
                   ),
-                  const Expanded(
+                  Expanded(
                     child: Text(
                       'Reset password',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.whiteColor,
-                        fontSize: 20,
+                        fontSize: 20.sp,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
@@ -65,10 +66,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     onPressed: () {},
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(),
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.menu,
                       color: AppColors.whiteColor,
-                      size: 22,
+                      size: 22.r,
                     ),
                   ),
                 ],
@@ -76,13 +77,13 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const Spacer(flex: 3),
-                    const BrandLogo(),
-                    const SizedBox(height: 64),
+                    BrandLogo(),
+                    SizedBox(height: 64.h),
                     AuthTextField(
                       controller: _newPasswordController,
                       hintText: 'New Password',
@@ -95,7 +96,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                             setState(() => _obscureNew = !_obscureNew),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     AuthTextField(
                       controller: _confirmPasswordController,
                       hintText: 'Confirm Password',
@@ -111,7 +112,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     ),
                     const Spacer(flex: 2),
                     SizedBox(
-                      height: 50,
+                      height: 50.h,
                       child: ElevatedButton(
                         onPressed: _confirm,
                         style: ElevatedButton.styleFrom(
@@ -119,13 +120,13 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                           foregroundColor: AppColors.whiteColor,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(100),
+                            borderRadius: BorderRadius.circular(100.r),
                           ),
                         ),
-                        child: const Text(
+                        child: Text(
                           'Confirm',
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -156,7 +157,7 @@ class _VisibilityToggle extends StatelessWidget {
       icon: Icon(
         obscured ? Icons.visibility_off_outlined : Icons.visibility_outlined,
         color: AppColors.fieldHintColor,
-        size: 22,
+        size: 22.r,
       ),
     );
   }

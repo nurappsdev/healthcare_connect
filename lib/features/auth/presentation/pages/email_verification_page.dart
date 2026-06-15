@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/app_router.dart';
@@ -36,26 +37,26 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
           children: [
             // Top bar: back, centered title, menu
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 14.h),
               child: Row(
                 children: [
                   IconButton(
                     onPressed: () => Navigator.of(context).maybePop(),
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(),
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.chevron_left,
                       color: AppColors.whiteColor,
-                      size: 28,
+                      size: 28.r,
                     ),
                   ),
-                  const Expanded(
+                  Expanded(
                     child: Text(
                       'E-mail Verification',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.whiteColor,
-                        fontSize: 20,
+                        fontSize: 20.sp,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
@@ -65,13 +66,13 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const Spacer(flex: 3),
-                    const BrandLogo(),
-                    const SizedBox(height: 64),
+                    BrandLogo(),
+                    SizedBox(height: 64.h),
                     AuthTextField(
                       controller: _emailController,
                       hintText: 'Email',
@@ -82,7 +83,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                     ),
                     const Spacer(flex: 2),
                     SizedBox(
-                      height: 50,
+                      height: 50.h,
                       child: ElevatedButton(
                         onPressed: _sendOtp,
                         style: ElevatedButton.styleFrom(
@@ -90,13 +91,13 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                           foregroundColor: AppColors.whiteColor,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(100),
+                            borderRadius: BorderRadius.circular(100.r),
                           ),
                         ),
-                        child: const Text(
+                        child: Text(
                           'Send OTP',
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                           ),
                         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../../../core/theme/app_colors.dart';
@@ -32,9 +33,9 @@ class OtpInputField extends StatelessWidget {
       enableActiveFill: true,
       keyboardType: TextInputType.number,
       cursorColor: AppColors.accentPurple,
-      textStyle: const TextStyle(
+      textStyle: TextStyle(
         color: AppColors.whiteColor,
-        fontSize: 16,
+        fontSize: 16.sp,
       ),
       // Allow pasting the code.
       beforeTextPaste: (text) => true,
@@ -43,9 +44,9 @@ class OtpInputField extends StatelessWidget {
       onCompleted: (value) => onCompleted?.call(value),
       pinTheme: PinTheme(
         shape: PinCodeFieldShape.box,
-        borderRadius: BorderRadius.circular(8),
-        fieldHeight: 50,
-        fieldWidth: 50,
+        borderRadius: BorderRadius.circular(8.r),
+        fieldHeight: 50.h,
+        fieldWidth: 50.w,
         borderWidth: 1,
         activeColor: AppColors.accentPurple,
         inactiveColor: AppColors.mutedTextColor,

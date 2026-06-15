@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
@@ -19,13 +20,18 @@ class HealthcareConnectApp extends ConsumerWidget {
     final themeMode = ref.watch(themeModeProvider);
     final router = ref.watch(routerProvider);
 
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      title: 'Healthcare Connect',
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: themeMode,
-      routerConfig: router,
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) => MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        title: 'Healthcare Connect',
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: themeMode,
+        routerConfig: router,
+      ),
     );
   }
 }

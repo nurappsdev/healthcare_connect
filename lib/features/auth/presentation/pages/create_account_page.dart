@@ -1,9 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../widgets/account_created_dialog.dart';
 import '../widgets/auth_text_field.dart';
 
 class CreateAccountPage extends StatefulWidget {
@@ -34,8 +36,11 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     super.dispose();
   }
 
-  void _register() {
+  Future<void> _register() async {
     // TODO: wire up the register use case.
+    final setupNow = await AccountCreatedDialog.show(context);
+    if (setupNow == null || !mounted) return;
+    // TODO: navigate to profile setup when `setupNow` is true.
   }
 
   @override
@@ -49,50 +54,50 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
             Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 14,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 24.w,
+                  vertical: 14.h,
                 ),
                 child: IconButton(
                   onPressed: () => Navigator.of(context).maybePop(),
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.chevron_left,
                     color: AppColors.whiteColor,
-                    size: 28,
+                    size: 28.r,
                   ),
                 ),
               ),
             ),
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const SizedBox(height: 8),
-                    const Text(
+                    SizedBox(height: 8.h),
+                    Text(
                       'Create Account',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.whiteColor,
-                        fontSize: 22,
+                        fontSize: 22.sp,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    const Text(
+                    SizedBox(height: 8.h),
+                    Text(
                       'Enter this information properly and get excited '
                       'service properly !!!',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.fieldHintColor,
-                        fontSize: 12,
+                        fontSize: 12.sp,
                         height: 1.3,
                       ),
                     ),
-                    const SizedBox(height: 28),
+                    SizedBox(height: 28.h),
                     AuthTextField(
                       controller: _nameController,
                       hintText: 'Name',
@@ -100,7 +105,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       keyboardType: TextInputType.name,
                       textInputAction: TextInputAction.next,
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     AuthTextField(
                       controller: _emailController,
                       hintText: 'Enter E-mail',
@@ -108,7 +113,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     AuthTextField(
                       controller: _phoneController,
                       hintText: 'Phone number',
@@ -116,7 +121,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       keyboardType: TextInputType.phone,
                       textInputAction: TextInputAction.next,
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     AuthTextField(
                       controller: _passwordController,
                       hintText: 'Enter Password',
@@ -130,7 +135,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     AuthTextField(
                       controller: _confirmPasswordController,
                       hintText: 'Confirm Password',
@@ -145,17 +150,19 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h),
                     _AgreementRow(
                       value: _agreed,
                       onChanged: (value) =>
                           setState(() => _agreed = value ?? false),
+                      onTermsTap: () =>
+                          context.push(AppRoutes.termsOfService),
                       onPrivacyTap: () =>
                           context.push(AppRoutes.privacyPolicy),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h),
                     SizedBox(
-                      height: 50,
+                      height: 50.h,
                       child: ElevatedButton(
                         onPressed: _agreed ? _register : null,
                         style: ElevatedButton.styleFrom(
@@ -165,42 +172,42 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                           foregroundColor: AppColors.whiteColor,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(100),
+                            borderRadius: BorderRadius.circular(100.r),
                           ),
                         ),
-                        child: const Text(
+                        child: Text(
                           'Register',
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           'Have an account ? ',
                           style: TextStyle(
                             color: AppColors.whiteColor,
-                            fontSize: 12,
+                            fontSize: 12.sp,
                           ),
                         ),
                         GestureDetector(
                           onTap: () => context.go(AppRoutes.login),
-                          child: const Text(
+                          child: Text(
                             'Login',
                             style: TextStyle(
                               color: AppColors.accentRed,
-                              fontSize: 12,
+                              fontSize: 12.sp,
                             ),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                   ],
                 ),
               ),
@@ -216,11 +223,13 @@ class _AgreementRow extends StatefulWidget {
   const _AgreementRow({
     required this.value,
     required this.onChanged,
+    required this.onTermsTap,
     required this.onPrivacyTap,
   });
 
   final bool value;
   final ValueChanged<bool?> onChanged;
+  final VoidCallback onTermsTap;
   final VoidCallback onPrivacyTap;
 
   @override
@@ -228,17 +237,20 @@ class _AgreementRow extends StatefulWidget {
 }
 
 class _AgreementRowState extends State<_AgreementRow> {
+  late final TapGestureRecognizer _termsRecognizer;
   late final TapGestureRecognizer _privacyRecognizer;
 
   @override
   void initState() {
     super.initState();
+    _termsRecognizer = TapGestureRecognizer()..onTap = widget.onTermsTap;
     _privacyRecognizer = TapGestureRecognizer()
       ..onTap = widget.onPrivacyTap;
   }
 
   @override
   void dispose() {
+    _termsRecognizer.dispose();
     _privacyRecognizer.dispose();
     super.dispose();
   }
@@ -248,32 +260,33 @@ class _AgreementRowState extends State<_AgreementRow> {
     return Row(
       children: [
         SizedBox(
-          width: 22,
-          height: 22,
+          width: 22.w,
+          height: 22.w,
           child: Checkbox(
             value: widget.value,
             onChanged: widget.onChanged,
             activeColor: AppColors.accentPurple,
             side: const BorderSide(color: AppColors.fieldHintColor),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: BorderRadius.circular(4.r),
             ),
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
         ),
-        const SizedBox(width: 8),
+        SizedBox(width: 8.w),
         Expanded(
           child: Text.rich(
             TextSpan(
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppColors.whiteColor,
-                fontSize: 12,
+                fontSize: 12.sp,
               ),
               children: [
                 const TextSpan(text: 'Agree with '),
-                const TextSpan(
+                TextSpan(
                   text: 'Terms of Services',
-                  style: TextStyle(color: AppColors.accentRed),
+                  style: const TextStyle(color: AppColors.accentRed),
+                  recognizer: _termsRecognizer,
                 ),
                 const TextSpan(text: ' & '),
                 TextSpan(
@@ -303,7 +316,7 @@ class _VisibilityToggle extends StatelessWidget {
       icon: Icon(
         obscured ? Icons.visibility_off_outlined : Icons.visibility_outlined,
         color: AppColors.fieldHintColor,
-        size: 22,
+        size: 22.r,
       ),
     );
   }

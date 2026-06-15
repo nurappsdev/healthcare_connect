@@ -9,6 +9,7 @@ import '../../features/auth/presentation/pages/otp_verification_page.dart';
 import '../../features/auth/presentation/pages/reset_password_page.dart';
 import '../../features/auth/presentation/pages/signup_page.dart';
 import '../../features/legal/presentation/pages/privacy_policy_page.dart';
+import '../../features/legal/presentation/pages/terms_of_service_page.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
 
 /// Named route paths used across the app.
@@ -21,6 +22,7 @@ abstract class AppRoutes {
   static const signup = '/signup';
   static const createAccount = '/create-account';
   static const privacyPolicy = '/privacy-policy';
+  static const termsOfService = '/terms-of-service';
 }
 
 /// Application [GoRouter], exposed as a provider so navigation config can be
@@ -68,6 +70,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.privacyPolicy,
         builder: (context, state) =>
             PrivacyPolicyPage(html: state.extra as String?),
+      ),
+      GoRoute(
+        path: AppRoutes.termsOfService,
+        builder: (context, state) =>
+            TermsOfServicePage(html: state.extra as String?),
       ),
     ],
   );

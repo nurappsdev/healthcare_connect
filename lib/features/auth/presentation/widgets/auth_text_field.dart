@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/theme/app_colors.dart';
 
@@ -34,24 +35,24 @@ class AuthTextField extends StatelessWidget {
       keyboardType: keyboardType,
       textInputAction: textInputAction,
       onSubmitted: onSubmitted,
-      style: const TextStyle(color: AppColors.whiteColor, fontSize: 14),
+      style: TextStyle(color: AppColors.whiteColor, fontSize: 14.sp),
       cursorColor: AppColors.accentPurple,
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: const TextStyle(
+        hintStyle: TextStyle(
           color: AppColors.fieldHintColor,
-          fontSize: 14,
+          fontSize: 14.sp,
         ),
-        prefixIcon: Icon(icon, color: AppColors.fieldHintColor, size: 22),
+        prefixIcon: Icon(icon, color: AppColors.fieldHintColor, size: 22.r),
         suffixIcon: suffix,
         filled: false,
-        contentPadding: const EdgeInsets.symmetric(vertical: 16),
+        contentPadding: EdgeInsets.symmetric(vertical: 16.h),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
           borderSide: const BorderSide(color: AppColors.fieldBorderColor),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
           borderSide: const BorderSide(color: AppColors.accentPurple),
         ),
       ),

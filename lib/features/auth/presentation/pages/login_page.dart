@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/app_router.dart';
@@ -60,31 +61,31 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             Align(
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 20,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 24.w,
+                  vertical: 20.h,
                 ),
                 child: IconButton(
                   onPressed: () => Navigator.of(context).maybePop(),
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.chevron_left,
                     color: AppColors.whiteColor,
-                    size: 28,
+                    size: 28.r,
                   ),
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   // Brand logo + tagline
-                  const BrandLogo(),
-                  const SizedBox(height: 64),
+                  BrandLogo(),
+                  SizedBox(height: 64.h),
                   // Email field
                   AuthTextField(
                     controller: _emailController,
@@ -93,7 +94,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   // Password field
                   AuthTextField(
                     controller: _passwordController,
@@ -111,29 +112,29 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             ? Icons.visibility_off_outlined
                             : Icons.visibility_outlined,
                         color: AppColors.fieldHintColor,
-                        size: 22,
+                        size: 22.r,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   // Forgot password
                   Align(
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
                       onTap: () => context.push(AppRoutes.emailVerification),
-                      child: const Text(
+                      child: Text(
                         'Forgot Password',
                         style: TextStyle(
                           color: AppColors.accentRed,
-                          fontSize: 12,
+                          fontSize: 12.sp,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 36),
+                  SizedBox(height: 36.h),
                   // Login button
                   SizedBox(
-                    height: 50,
+                    height: 50.h,
                     child: ElevatedButton(
                       onPressed: isLoading ? null : _submit,
                       style: ElevatedButton.styleFrom(
@@ -143,46 +144,46 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         foregroundColor: AppColors.whiteColor,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100),
+                          borderRadius: BorderRadius.circular(100.r),
                         ),
                       ),
                       child: isLoading
-                          ? const SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(
+                          ? SizedBox(
+                              height: 20.h,
+                              width: 20.h,
+                              child: const CircularProgressIndicator(
                                 strokeWidth: 2,
                                 color: AppColors.whiteColor,
                               ),
                             )
-                          : const Text(
+                          : Text(
                               'Login',
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 14.sp,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   // Sign up prompt
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
+                      Text(
                         "Don't have an account? ",
                         style: TextStyle(
                           color: AppColors.mutedTextColor,
-                          fontSize: 12,
+                          fontSize: 12.sp,
                         ),
                       ),
                       GestureDetector(
                         onTap: () => context.push(AppRoutes.signup),
-                        child: const Text(
+                        child: Text(
                           'Sign Up',
                           style: TextStyle(
                             color: AppColors.accentRed,
-                            fontSize: 12,
+                            fontSize: 12.sp,
                           ),
                         ),
                       ),

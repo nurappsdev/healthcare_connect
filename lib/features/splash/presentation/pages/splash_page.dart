@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
@@ -62,7 +63,7 @@ class _SplashPageState extends State<SplashPage>
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 28),
+          padding: EdgeInsets.symmetric(horizontal: 28.w),
           child: SlideTransition(
             position: _slideAnimation,
             child: FadeTransition(
@@ -74,26 +75,26 @@ class _SplashPageState extends State<SplashPage>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SvgPicture.asset('assets/logo.svg', width: logoWidth),
-                    const SizedBox(height: 30),
-                    const Text(
+                    SizedBox(height: 30.h),
+                    Text(
                       'Your Healthcare Career Partner',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.splashAccentColor,
-                        fontSize: 13,
+                        fontSize: 13.sp,
                         fontWeight: FontWeight.w700,
                         height: 1.25,
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    const Text(
+                    SizedBox(height: 20.h),
+                    Text(
                       'Connecting professionals, recruiters, and\n'
                       'educators to foster career growth, certification\n'
                       'success, and lifelong learning.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.splashTextColor,
-                        fontSize: 12,
+                        fontSize: 12.sp,
                         fontWeight: FontWeight.w400,
                         height: 1.35,
                       ),

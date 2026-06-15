@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/app_router.dart';
@@ -79,26 +80,26 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
           children: [
             // Top bar: back, centered title, menu
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 14.h),
               child: Row(
                 children: [
                   IconButton(
                     onPressed: () => Navigator.of(context).maybePop(),
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(),
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.chevron_left,
                       color: AppColors.whiteColor,
-                      size: 28,
+                      size: 28.r,
                     ),
                   ),
-                  const Expanded(
+                  Expanded(
                     child: Text(
                       'OTP Verification',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.whiteColor,
-                        fontSize: 20,
+                        fontSize: 20.sp,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
@@ -107,10 +108,10 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                     onPressed: () {},
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(),
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.menu,
                       color: AppColors.whiteColor,
-                      size: 22,
+                      size: 22.r,
                     ),
                   ),
                 ],
@@ -118,54 +119,54 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const Spacer(flex: 3),
-                    const BrandLogo(),
-                    const SizedBox(height: 64),
+                    BrandLogo(),
+                    SizedBox(height: 64.h),
                     OtpInputField(
                       controller: _otpController,
                       onCompleted: (_) => _verify(),
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                        Text(
                           'Didn’t got the code?',
                           style: TextStyle(
                             color: AppColors.whiteColor,
-                            fontSize: 12,
+                            fontSize: 12.sp,
                           ),
                         ),
                         _canResend
                             ? GestureDetector(
                                 onTap: _resend,
-                                child: const Text(
+                                child: Text(
                                   'Resend',
                                   style: TextStyle(
                                     color: AppColors.accentRed,
-                                    fontSize: 12,
+                                    fontSize: 12.sp,
                                   ),
                                 ),
                               )
                             : Row(
                                 children: [
-                                  const Text(
+                                  Text(
                                     'Resend in',
                                     style: TextStyle(
                                       color: AppColors.accentRed,
-                                      fontSize: 12,
+                                      fontSize: 12.sp,
                                     ),
                                   ),
-                                  const SizedBox(width: 8),
+                                  SizedBox(width: 8.w),
                                   Text(
                                     _formattedRemaining,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       color: AppColors.whiteColor,
-                                      fontSize: 12,
+                                      fontSize: 12.sp,
                                     ),
                                   ),
                                 ],
@@ -174,7 +175,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                     ),
                     const Spacer(flex: 2),
                     SizedBox(
-                      height: 50,
+                      height: 50.h,
                       child: ElevatedButton(
                         onPressed: _verify,
                         style: ElevatedButton.styleFrom(
@@ -182,13 +183,13 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                           foregroundColor: AppColors.whiteColor,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(100),
+                            borderRadius: BorderRadius.circular(100.r),
                           ),
                         ),
-                        child: const Text(
+                        child: Text(
                           'Verify',
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
