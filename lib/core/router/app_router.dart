@@ -8,6 +8,7 @@ import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/otp_verification_page.dart';
 import '../../features/auth/presentation/pages/reset_password_page.dart';
 import '../../features/auth/presentation/pages/signup_page.dart';
+import '../../features/home/presentation/pages/find_job_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/legal/presentation/pages/privacy_policy_page.dart';
 import '../../features/legal/presentation/pages/terms_of_service_page.dart';
@@ -27,6 +28,7 @@ abstract class AppRoutes {
   static const splash = '/';
   static const login = '/login';
   static const home = '/home';
+  static const findJob = '/find-job';
   static const emailVerification = '/email-verification';
   static const otpVerification = '/otp-verification';
   static const resetPassword = '/reset-password';
@@ -68,6 +70,11 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.home,
         builder: (context, state) => const HomePage(),
+      ),
+      GoRoute(
+        path: AppRoutes.findJob,
+        builder: (context, state) =>
+            FindJobPage(jobs: state.extra as List<String>?),
       ),
       GoRoute(
         path: AppRoutes.emailVerification,

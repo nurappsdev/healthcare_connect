@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../widgets/home_bottom_bar.dart';
 import '../widgets/home_widgets.dart';
@@ -93,7 +95,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 SizedBox(height: 22.h),
-                const HomeSectionTitle("Top company's"),
+                HomeSectionTitle(
+                  "Top company's",
+                  onViewMore: () =>
+                      context.push(AppRoutes.findJob, extra: _allJobs),
+                ),
                 SizedBox(height: 16.h),
                 ...jobs.map(
                   (job) => Padding(

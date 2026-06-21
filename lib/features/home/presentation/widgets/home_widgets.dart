@@ -117,9 +117,10 @@ class HomeSearchField extends StatelessWidget {
 }
 
 class HomeSectionTitle extends StatelessWidget {
-  const HomeSectionTitle(this.title, {super.key});
+  const HomeSectionTitle(this.title, {this.onViewMore, super.key});
 
   final String title;
+  final VoidCallback? onViewMore;
 
   @override
   Widget build(BuildContext context) => Row(
@@ -130,9 +131,13 @@ class HomeSectionTitle extends StatelessWidget {
           style: TextStyle(color: _white, fontSize: 16.sp),
         ),
       ),
-      Text(
-        'View More',
-        style: TextStyle(color: _green, fontSize: 8.sp),
+      GestureDetector(
+        onTap: onViewMore,
+        behavior: HitTestBehavior.opaque,
+        child: Text(
+          'View More',
+          style: TextStyle(color: _green, fontSize: 8.sp),
+        ),
       ),
     ],
   );
