@@ -144,10 +144,18 @@ class HomeSectionTitle extends StatelessWidget {
 }
 
 class HomeJobCard extends StatelessWidget {
-  const HomeJobCard({required this.title, this.compact = false, super.key});
+  const HomeJobCard({
+    required this.title,
+    this.compact = false,
+    this.onTap,
+    this.onApply,
+    super.key,
+  });
 
   final String title;
   final bool compact;
+  final VoidCallback? onTap;
+  final VoidCallback? onApply;
 
   @override
   Widget build(BuildContext context) {
@@ -155,89 +163,92 @@ class HomeJobCard extends StatelessWidget {
         ? ['Critical thinking', 'Analytics skill', '+5 more']
         : ['Team work', 'Critical thinking', 'Analytics skill', '+5 more'];
 
-    return Container(
-      padding: EdgeInsets.all(compact ? 14.r : 18.r),
-      decoration: BoxDecoration(
-        color: Colors.black,
-        border: Border.all(color: _border),
-        borderRadius: BorderRadius.circular(24.r),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const _Logo(),
-              SizedBox(width: 10.w),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: TextStyle(
-                        color: _white,
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    Text(
-                      'Jakarta - Indonesia',
-                      style: TextStyle(color: _white, fontSize: 9.sp),
-                    ),
-                  ],
-                ),
-              ),
-              const _Score(),
-            ],
-          ),
-          SizedBox(height: compact ? 14.h : 20.h),
-          Wrap(
-            spacing: 6.w,
-            runSpacing: 5.h,
-            children: skills.map((skill) => _SkillChip(skill)).toList(),
-          ),
-          SizedBox(height: compact ? 10.h : 14.h),
-          Text(
-            'Lorem ipsum dolor sit amet consectetur ut sagittis arcu nunc '
-            'commodo morbi sem aliquet. Lorem ipsum dolor sit amet...',
-            maxLines: compact ? 2 : 4,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: _white, fontSize: 9.sp, height: 1.45),
-          ),
-          SizedBox(height: compact ? 8.h : 10.h),
-          const _MetaRow(),
-          SizedBox(height: compact ? 12.h : 16.h),
-          Row(
-            children: [
-              Icon(Icons.attach_money, color: _white, size: 16.r),
-              SizedBox(width: 8.w),
-              Text(
-                '12, 000',
-                style: TextStyle(
-                  color: _white,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-            ],
-          ),
-          if (!compact) ...[
-            SizedBox(height: 16.h),
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(24.r),
+      child: Container(
+        padding: EdgeInsets.all(compact ? 14.r : 18.r),
+        decoration: BoxDecoration(
+          color: Colors.black,
+          border: Border.all(color: _border),
+          borderRadius: BorderRadius.circular(24.r),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
             Row(
               children: [
-                const _SaveButton(),
-                SizedBox(width: 12.w),
-                const Expanded(child: _ApplyButton()),
+                const _Logo(),
+                SizedBox(width: 10.w),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                          color: _white,
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      Text(
+                        'Jakarta - Indonesia',
+                        style: TextStyle(color: _white, fontSize: 9.sp),
+                      ),
+                    ],
+                  ),
+                ),
+                const _Score(),
               ],
             ),
+            SizedBox(height: compact ? 14.h : 20.h),
+            Wrap(
+              spacing: 6.w,
+              runSpacing: 5.h,
+              children: skills.map((skill) => _SkillChip(skill)).toList(),
+            ),
+            SizedBox(height: compact ? 10.h : 14.h),
+            Text(
+              'Lorem ipsum dolor sit amet consectetur ut sagittis arcu nunc '
+              'commodo morbi sem aliquet. Lorem ipsum dolor sit amet...',
+              maxLines: compact ? 2 : 4,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(color: _white, fontSize: 9.sp, height: 1.45),
+            ),
+            SizedBox(height: compact ? 8.h : 10.h),
+            const _MetaRow(),
+            SizedBox(height: compact ? 12.h : 16.h),
+            Row(
+              children: [
+                Icon(Icons.attach_money, color: _white, size: 16.r),
+                SizedBox(width: 8.w),
+                Text(
+                  '12, 000',
+                  style: TextStyle(
+                    color: _white,
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ],
+            ),
+            if (!compact) ...[
+              SizedBox(height: 16.h),
+              Row(
+                children: [
+                  const _SaveButton(),
+                  SizedBox(width: 12.w),
+                  Expanded(child: _ApplyButton(onPressed: onApply)),
+                ],
+              ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
 }
-
 
 class _Logo extends StatelessWidget {
   const _Logo();
@@ -338,13 +349,15 @@ class _SaveButton extends StatelessWidget {
 }
 
 class _ApplyButton extends StatelessWidget {
-  const _ApplyButton();
+  const _ApplyButton({this.onPressed});
+
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) => SizedBox(
     height: 50.h,
     child: ElevatedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.accentPurple,
         foregroundColor: _white,

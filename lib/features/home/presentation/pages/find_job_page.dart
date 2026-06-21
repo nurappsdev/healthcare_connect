@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../widgets/home_widgets.dart';
+import '../widgets/job_apply_dialog.dart';
 
 /// Full listing of top companies, reached from the "View More" action of the
 /// home screen's "Top company's" section.
@@ -107,7 +109,14 @@ class _FindJobPageState extends State<FindJobPage> {
                       padding: EdgeInsets.fromLTRB(18.w, 0, 18.w, 24.h),
                       itemCount: jobs.length,
                       separatorBuilder: (_, _) => SizedBox(height: 14.h),
-                      itemBuilder: (_, index) => HomeJobCard(title: jobs[index]),
+                      itemBuilder: (_, index) => HomeJobCard(
+                        title: jobs[index],
+                        onTap: () => context.push(
+                          AppRoutes.jobDetails,
+                          extra: jobs[index],
+                        ),
+                        onApply: () => showJobApplyDialog(context),
+                      ),
                     ),
             ),
           ],

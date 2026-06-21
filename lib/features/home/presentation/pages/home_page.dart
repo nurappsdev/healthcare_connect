@@ -6,6 +6,7 @@ import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../widgets/home_bottom_bar.dart';
 import '../widgets/home_widgets.dart';
+import '../widgets/job_apply_dialog.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -90,7 +91,14 @@ class _HomePageState extends State<HomePage> {
                     separatorBuilder: (_, index) => SizedBox(width: 12.w),
                     itemBuilder: (_, index) => SizedBox(
                       width: 268.w,
-                      child: HomeJobCard(title: jobs[index], compact: true),
+                      child: HomeJobCard(
+                        title: jobs[index],
+                        compact: true,
+                        onTap: () => context.push(
+                          AppRoutes.jobDetails,
+                          extra: jobs[index],
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -104,7 +112,12 @@ class _HomePageState extends State<HomePage> {
                 ...jobs.map(
                   (job) => Padding(
                     padding: EdgeInsets.only(bottom: 14.h),
-                    child: HomeJobCard(title: job),
+                    child: HomeJobCard(
+                      title: job,
+                      onTap: () =>
+                          context.push(AppRoutes.jobDetails, extra: job),
+                      onApply: () => showJobApplyDialog(context),
+                    ),
                   ),
                 ),
               ],

@@ -8,8 +8,10 @@ import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/otp_verification_page.dart';
 import '../../features/auth/presentation/pages/reset_password_page.dart';
 import '../../features/auth/presentation/pages/signup_page.dart';
+import '../../features/home/presentation/pages/about_company_page.dart';
 import '../../features/home/presentation/pages/find_job_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
+import '../../features/home/presentation/pages/job_details_page.dart';
 import '../../features/legal/presentation/pages/privacy_policy_page.dart';
 import '../../features/legal/presentation/pages/terms_of_service_page.dart';
 import '../../features/profile/presentation/pages/add_bio_page.dart';
@@ -29,6 +31,8 @@ abstract class AppRoutes {
   static const login = '/login';
   static const home = '/home';
   static const findJob = '/find-job';
+  static const jobDetails = '/job-details';
+  static const aboutCompany = '/about-company';
   static const emailVerification = '/email-verification';
   static const otpVerification = '/otp-verification';
   static const resetPassword = '/reset-password';
@@ -75,6 +79,16 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.findJob,
         builder: (context, state) =>
             FindJobPage(jobs: state.extra as List<String>?),
+      ),
+      GoRoute(
+        path: AppRoutes.jobDetails,
+        builder: (context, state) =>
+            JobDetailsPage(companyName: state.extra as String? ?? 'McDonald'),
+      ),
+      GoRoute(
+        path: AppRoutes.aboutCompany,
+        builder: (context, state) =>
+            AboutCompanyPage(companyName: state.extra as String? ?? 'McDonald'),
       ),
       GoRoute(
         path: AppRoutes.emailVerification,
