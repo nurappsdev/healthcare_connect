@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
+import 'ats_checker_page.dart';
 import '../widgets/home_bottom_bar.dart';
 import '../widgets/home_widgets.dart';
 import '../widgets/job_apply_dialog.dart';
@@ -43,15 +44,23 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final jobs = _jobs;
-
     return Scaffold(
       backgroundColor: AppColors.loginBackground,
       bottomNavigationBar: HomeBottomBar(
         currentIndex: _currentIndex,
         onChanged: (index) => setState(() => _currentIndex = index),
       ),
-      body: SafeArea(
+      body: switch (_currentIndex) {
+        1 => const AtsCheckerPage(),
+        _ => _buildHomeBody(),
+      },
+    );
+  }
+
+  Widget _buildHomeBody() {
+    final jobs = _jobs;
+
+    return SafeArea(
         bottom: false,
         child: SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(18.w, 10.h, 18.w, 24.h),
@@ -124,7 +133,6 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }

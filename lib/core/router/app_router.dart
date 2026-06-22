@@ -9,6 +9,7 @@ import '../../features/auth/presentation/pages/otp_verification_page.dart';
 import '../../features/auth/presentation/pages/reset_password_page.dart';
 import '../../features/auth/presentation/pages/signup_page.dart';
 import '../../features/home/presentation/pages/about_company_page.dart';
+import '../../features/home/presentation/pages/cv_score_page.dart';
 import '../../features/home/presentation/pages/find_job_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/home/presentation/pages/job_details_page.dart';
@@ -33,6 +34,7 @@ abstract class AppRoutes {
   static const findJob = '/find-job';
   static const jobDetails = '/job-details';
   static const aboutCompany = '/about-company';
+  static const cvScore = '/cv-score';
   static const emailVerification = '/email-verification';
   static const otpVerification = '/otp-verification';
   static const resetPassword = '/reset-password';
@@ -89,6 +91,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.aboutCompany,
         builder: (context, state) =>
             AboutCompanyPage(companyName: state.extra as String? ?? 'McDonald'),
+      ),
+      GoRoute(
+        path: AppRoutes.cvScore,
+        builder: (context, state) =>
+            CvScorePage(cvPath: state.extra as String?),
       ),
       GoRoute(
         path: AppRoutes.emailVerification,
