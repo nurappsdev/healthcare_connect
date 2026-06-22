@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../widgets/profile_form_field.dart';
+import '../../../profile/presentation/widgets/profile_form_field.dart';
 
 class CompanyInformationPage extends StatefulWidget {
   const CompanyInformationPage({super.key});

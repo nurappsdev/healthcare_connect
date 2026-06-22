@@ -16,7 +16,6 @@ import '../../features/home/presentation/pages/find_job_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/home/presentation/pages/job_details_page.dart';
 import '../../features/home/presentation/pages/message_page.dart';
-import '../../features/home/presentation/pages/post_job_page.dart';
 import '../../features/home/presentation/pages/report_user_page.dart';
 import '../../features/legal/presentation/pages/privacy_policy_page.dart';
 import '../../features/legal/presentation/pages/terms_of_service_page.dart';
@@ -24,15 +23,16 @@ import '../../features/profile/presentation/pages/add_bio_page.dart';
 import '../../features/profile/presentation/pages/add_education_page.dart';
 import '../../features/profile/presentation/pages/add_skills_page.dart';
 import '../../features/profile/presentation/pages/contact_info_page.dart';
-import '../../features/profile/presentation/pages/company_information_page.dart';
 import '../../features/profile/presentation/pages/education_list_page.dart';
 import '../../features/profile/presentation/pages/job_experience_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/profile/presentation/pages/profile_information_page.dart';
 import '../../features/profile/presentation/pages/settings_page.dart';
 import '../../features/profile/presentation/pages/upload_certificate_page.dart';
-import '../../features/profile/presentation/pages/upload_license_page.dart';
 import '../../features/profile/presentation/pages/upload_resume_page.dart';
+import '../../features/recruiter/presentation/pages/company_information_page.dart';
+import '../../features/recruiter/presentation/pages/post_job_page.dart';
+import '../../features/recruiter/presentation/pages/upload_license_page.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
 
 /// Named route paths used across the app.
@@ -44,6 +44,11 @@ abstract class AppRoutes {
   static const jobDetails = '/job-details';
   static const postJob = '/post-job';
   static const jobPrimaryInformation = '/job-primary-information';
+  static const jobDescription = '/job-description';
+  static const jobResponsibilities = '/job-responsibilities';
+  static const jobRequirements = '/job-requirements';
+  static const jobBenefits = '/job-benefits';
+  static const jobPreview = '/job-preview';
   static const aboutCompany = '/about-company';
   static const cvScore = '/cv-score';
   static const chat = '/chat';
@@ -120,6 +125,32 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.jobPrimaryInformation,
         builder: (context, state) => const JobPrimaryInformationPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.jobDescription,
+        builder: (context, state) => JobTextSectionPage(
+          title: state.extra as String? ?? 'Job description',
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.jobResponsibilities,
+        builder: (context, state) => JobTextSectionPage(
+          title: state.extra as String? ?? 'Responsibilities',
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.jobRequirements,
+        builder: (context, state) =>
+            JobTextSectionPage(title: state.extra as String? ?? 'Requirements'),
+      ),
+      GoRoute(
+        path: AppRoutes.jobBenefits,
+        builder: (context, state) =>
+            JobTextSectionPage(title: state.extra as String? ?? 'Benefits'),
+      ),
+      GoRoute(
+        path: AppRoutes.jobPreview,
+        builder: (context, state) => const JobPreviewPage(),
       ),
       GoRoute(
         path: AppRoutes.aboutCompany,

@@ -7,7 +7,7 @@ import '../../../../core/helpers/prefs_helper.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_constant.dart';
-import '../widgets/profile_form_field.dart';
+import '../../../profile/presentation/widgets/profile_form_field.dart';
 
 class UploadLicensePage extends StatefulWidget {
   const UploadLicensePage({super.key});
