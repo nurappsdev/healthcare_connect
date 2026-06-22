@@ -9,10 +9,14 @@ import '../../features/auth/presentation/pages/otp_verification_page.dart';
 import '../../features/auth/presentation/pages/reset_password_page.dart';
 import '../../features/auth/presentation/pages/signup_page.dart';
 import '../../features/home/presentation/pages/about_company_page.dart';
+import '../../features/home/presentation/pages/chat_media_page.dart';
+import '../../features/home/presentation/pages/chat_page.dart';
 import '../../features/home/presentation/pages/cv_score_page.dart';
 import '../../features/home/presentation/pages/find_job_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/home/presentation/pages/job_details_page.dart';
+import '../../features/home/presentation/pages/message_page.dart';
+import '../../features/home/presentation/pages/report_user_page.dart';
 import '../../features/legal/presentation/pages/privacy_policy_page.dart';
 import '../../features/legal/presentation/pages/terms_of_service_page.dart';
 import '../../features/profile/presentation/pages/add_bio_page.dart';
@@ -21,6 +25,7 @@ import '../../features/profile/presentation/pages/add_skills_page.dart';
 import '../../features/profile/presentation/pages/contact_info_page.dart';
 import '../../features/profile/presentation/pages/education_list_page.dart';
 import '../../features/profile/presentation/pages/job_experience_page.dart';
+import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/profile/presentation/pages/profile_information_page.dart';
 import '../../features/profile/presentation/pages/upload_certificate_page.dart';
 import '../../features/profile/presentation/pages/upload_resume_page.dart';
@@ -35,6 +40,10 @@ abstract class AppRoutes {
   static const jobDetails = '/job-details';
   static const aboutCompany = '/about-company';
   static const cvScore = '/cv-score';
+  static const chat = '/chat';
+  static const chatMedia = '/chat-media';
+  static const reportUser = '/report-user';
+  static const reportUserDetails = '/report-user-details';
   static const emailVerification = '/email-verification';
   static const otpVerification = '/otp-verification';
   static const resetPassword = '/reset-password';
@@ -42,6 +51,7 @@ abstract class AppRoutes {
   static const createAccount = '/create-account';
   static const privacyPolicy = '/privacy-policy';
   static const termsOfService = '/terms-of-service';
+  static const userProfile = '/user-profile';
   static const profileInformation = '/profile-information';
   static const addBio = '/add-bio';
   static const contactInfo = '/contact-info';
@@ -98,6 +108,35 @@ final routerProvider = Provider<GoRouter>((ref) {
             CvScorePage(cvPath: state.extra as String?),
       ),
       GoRoute(
+        path: AppRoutes.chat,
+        builder: (context, state) => ChatPage(
+          message: state.extra is MessagePreview
+              ? state.extra as MessagePreview
+              : const MessagePreview(
+                  name: 'Isabella',
+                  preview: 'hello how are you',
+                  time: '1:30 PM',
+                  colors: [Color(0xFF42D9D0), Color(0xFFEAB8A1)],
+                ),
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.chatMedia,
+        builder: (context, state) => const ChatMediaPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.reportUser,
+        builder: (context, state) => const ReportUserPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.reportUserDetails,
+        builder: (context, state) => ReportUserDetailsPage(
+          reason: state.extra is ReportReason
+              ? state.extra as ReportReason
+              : ReportUserPage.reasons.first,
+        ),
+      ),
+      GoRoute(
         path: AppRoutes.emailVerification,
         builder: (context, state) => const EmailVerificationPage(),
       ),
@@ -127,6 +166,10 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.termsOfService,
         builder: (context, state) =>
             TermsOfServicePage(html: state.extra as String?),
+      ),
+      GoRoute(
+        path: AppRoutes.userProfile,
+        builder: (context, state) => const ProfilePage(),
       ),
       GoRoute(
         path: AppRoutes.profileInformation,

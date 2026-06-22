@@ -18,7 +18,7 @@ class HomeBottomBar extends StatelessWidget {
     Icons.home_outlined,
     Icons.article_outlined,
     Icons.work_outline,
-    Icons.person_outline,
+    Icons.message_outlined,
   ];
 
   @override

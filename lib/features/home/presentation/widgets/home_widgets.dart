@@ -7,24 +7,30 @@ const _border = AppColors.cardBorderColor;
 const _white = Colors.white;
 
 class HomeHeader extends StatelessWidget {
-  const HomeHeader({super.key});
+  const HomeHeader({this.onProfileTap, super.key});
+
+  final VoidCallback? onProfileTap;
 
   @override
   Widget build(BuildContext context) => Row(
     children: [
-      Container(
-        height: 48.r,
-        width: 48.r,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(color: _green, width: 2.w),
-          gradient: const LinearGradient(
-            colors: [Color(0xFFE7D6B5), Color(0xFF8FBC4D)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+      GestureDetector(
+        onTap: onProfileTap,
+        behavior: HitTestBehavior.opaque,
+        child: Container(
+          height: 48.r,
+          width: 48.r,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: _green, width: 2.w),
+            gradient: const LinearGradient(
+              colors: [Color(0xFFE7D6B5), Color(0xFF8FBC4D)],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
           ),
+          child: Icon(Icons.person, color: _white, size: 26.r),
         ),
-        child: Icon(Icons.person, color: _white, size: 26.r),
       ),
       SizedBox(width: 10.w),
       Expanded(
