@@ -16,6 +16,7 @@ import '../../features/home/presentation/pages/find_job_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/home/presentation/pages/job_details_page.dart';
 import '../../features/home/presentation/pages/message_page.dart';
+import '../../features/home/presentation/pages/post_job_page.dart';
 import '../../features/home/presentation/pages/report_user_page.dart';
 import '../../features/legal/presentation/pages/privacy_policy_page.dart';
 import '../../features/legal/presentation/pages/terms_of_service_page.dart';
@@ -23,11 +24,14 @@ import '../../features/profile/presentation/pages/add_bio_page.dart';
 import '../../features/profile/presentation/pages/add_education_page.dart';
 import '../../features/profile/presentation/pages/add_skills_page.dart';
 import '../../features/profile/presentation/pages/contact_info_page.dart';
+import '../../features/profile/presentation/pages/company_information_page.dart';
 import '../../features/profile/presentation/pages/education_list_page.dart';
 import '../../features/profile/presentation/pages/job_experience_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/profile/presentation/pages/profile_information_page.dart';
+import '../../features/profile/presentation/pages/settings_page.dart';
 import '../../features/profile/presentation/pages/upload_certificate_page.dart';
+import '../../features/profile/presentation/pages/upload_license_page.dart';
 import '../../features/profile/presentation/pages/upload_resume_page.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
 
@@ -38,6 +42,8 @@ abstract class AppRoutes {
   static const home = '/home';
   static const findJob = '/find-job';
   static const jobDetails = '/job-details';
+  static const postJob = '/post-job';
+  static const jobPrimaryInformation = '/job-primary-information';
   static const aboutCompany = '/about-company';
   static const cvScore = '/cv-score';
   static const chat = '/chat';
@@ -49,9 +55,13 @@ abstract class AppRoutes {
   static const resetPassword = '/reset-password';
   static const signup = '/signup';
   static const createAccount = '/create-account';
+  static const companyInformation = '/company-information';
   static const privacyPolicy = '/privacy-policy';
   static const termsOfService = '/terms-of-service';
   static const userProfile = '/user-profile';
+  static const settings = '/settings';
+  static const adminSupport = '/admin-support';
+  static const changePassword = '/change-password';
   static const profileInformation = '/profile-information';
   static const addBio = '/add-bio';
   static const contactInfo = '/contact-info';
@@ -61,6 +71,7 @@ abstract class AppRoutes {
   static const jobExperience = '/job-experience';
   static const uploadResume = '/upload-resume';
   static const uploadCertificate = '/upload-certificate';
+  static const uploadLicense = '/upload-license';
 }
 
 /// Application [GoRouter], exposed as a provider so navigation config can be
@@ -85,7 +96,12 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: AppRoutes.home,
-        builder: (context, state) => const HomePage(),
+        builder: (context, state) => HomePage(
+          isRecruiter:
+              state.extra == SignupRole.hiring ||
+              state.extra == 'hiring' ||
+              state.extra == true,
+        ),
       ),
       GoRoute(
         path: AppRoutes.findJob,
@@ -96,6 +112,14 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.jobDetails,
         builder: (context, state) =>
             JobDetailsPage(companyName: state.extra as String? ?? 'McDonald'),
+      ),
+      GoRoute(
+        path: AppRoutes.postJob,
+        builder: (context, state) => const PostJobPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.jobPrimaryInformation,
+        builder: (context, state) => const JobPrimaryInformationPage(),
       ),
       GoRoute(
         path: AppRoutes.aboutCompany,
@@ -155,7 +179,13 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: AppRoutes.createAccount,
-        builder: (context, state) => const CreateAccountPage(),
+        builder: (context, state) => CreateAccountPage(
+          role: state.extra is SignupRole ? state.extra as SignupRole : null,
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.companyInformation,
+        builder: (context, state) => const CompanyInformationPage(),
       ),
       GoRoute(
         path: AppRoutes.privacyPolicy,
@@ -170,6 +200,18 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.userProfile,
         builder: (context, state) => const ProfilePage(),
+      ),
+      GoRoute(
+        path: AppRoutes.settings,
+        builder: (context, state) => const SettingsPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.adminSupport,
+        builder: (context, state) => const AdminSupportPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.changePassword,
+        builder: (context, state) => const ChangePasswordPage(),
       ),
       GoRoute(
         path: AppRoutes.profileInformation,
@@ -206,6 +248,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.uploadCertificate,
         builder: (context, state) => const UploadCertificatePage(),
+      ),
+      GoRoute(
+        path: AppRoutes.uploadLicense,
+        builder: (context, state) => const UploadLicensePage(),
       ),
     ],
   );

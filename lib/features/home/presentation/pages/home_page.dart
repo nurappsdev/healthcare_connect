@@ -2,17 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/helpers/prefs_helper.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_constant.dart';
 import 'ats_checker_page.dart';
 import 'jobs_page.dart';
 import 'message_page.dart';
+import 'recruiters_home_screen.dart';
 import '../widgets/home_bottom_bar.dart';
 import '../widgets/home_widgets.dart';
 import '../widgets/job_apply_dialog.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({this.isRecruiter = false, super.key});
+
+  final bool isRecruiter;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -22,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   final _searchController = TextEditingController();
   String _query = '';
+  late bool _isRecruiter = widget.isRecruiter;
 
   static const _allJobs = [
     'McDonald',
@@ -31,6 +37,23 @@ class _HomePageState extends State<HomePage> {
     'Microsoft',
     'Netflix',
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadRole();
+  }
+
+  Future<void> _loadRole() async {
+    try {
+      final role = await PrefsHelper.getString(AppConstants.role);
+      if (!mounted) return;
+      setState(() => _isRecruiter = widget.isRecruiter || role == 'hiring');
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _isRecruiter = widget.isRecruiter);
+    }
+  }
 
   @override
   void dispose() {
@@ -56,7 +79,7 @@ class _HomePageState extends State<HomePage> {
         1 => const AtsCheckerPage(),
         2 => const JobsPage(),
         3 => const MessagePage(),
-        _ => _buildHomeBody(),
+        _ => _isRecruiter ? const RecruitersHomeScreen() : _buildHomeBody(),
       },
     );
   }

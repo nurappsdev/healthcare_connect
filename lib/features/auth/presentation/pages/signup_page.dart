@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/helpers/prefs_helper.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_constant.dart';
 
 /// The role a person selects when signing up.
 enum SignupRole { lookingForWork, hiring, teaching }
@@ -18,9 +20,15 @@ class SignupPage extends StatefulWidget {
 class _SignupPageState extends State<SignupPage> {
   SignupRole? _selectedRole = SignupRole.hiring;
 
-  void _selectRole(SignupRole role) {
+  Future<void> _selectRole(SignupRole role) async {
     setState(() => _selectedRole = role);
-    context.push(AppRoutes.createAccount);
+    try {
+      await PrefsHelper.setString(AppConstants.role, role.name);
+    } catch (_) {
+      // Navigation should not be blocked by local preference channel issues.
+    }
+    if (!mounted) return;
+    context.push(AppRoutes.createAccount, extra: role);
   }
 
   @override

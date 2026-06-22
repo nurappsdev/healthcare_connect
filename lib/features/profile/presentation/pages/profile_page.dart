@@ -153,7 +153,7 @@ class _ProfileHeader extends StatelessWidget {
           Align(
             alignment: Alignment.centerRight,
             child: IconButton(
-              onPressed: () {},
+              onPressed: () => context.push(AppRoutes.settings),
               padding: EdgeInsets.zero,
               constraints: BoxConstraints.tight(Size(32.r, 32.r)),
               icon: Icon(

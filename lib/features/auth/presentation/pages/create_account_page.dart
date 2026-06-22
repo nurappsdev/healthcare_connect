@@ -7,9 +7,12 @@ import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../widgets/account_created_dialog.dart';
 import '../widgets/auth_text_field.dart';
+import 'signup_page.dart';
 
 class CreateAccountPage extends StatefulWidget {
-  const CreateAccountPage({super.key});
+  const CreateAccountPage({this.role, super.key});
+
+  final SignupRole? role;
 
   @override
   State<CreateAccountPage> createState() => _CreateAccountPageState();
@@ -41,7 +44,25 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     final setupNow = await AccountCreatedDialog.show(context);
     if (setupNow == null || !mounted) return;
     if (setupNow) {
+      _goToSetupScreen();
+    } else {
+      _goToRoleHome();
+    }
+  }
+
+  void _goToSetupScreen() {
+    if (widget.role == SignupRole.hiring) {
+      context.push(AppRoutes.companyInformation);
+    } else {
       context.push(AppRoutes.profileInformation);
+    }
+  }
+
+  void _goToRoleHome() {
+    if (widget.role == SignupRole.hiring) {
+      context.go(AppRoutes.home, extra: 'hiring');
+    } else {
+      context.go(AppRoutes.home);
     }
   }
 
@@ -56,10 +77,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
             Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 24.w,
-                  vertical: 14.h,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 14.h),
                 child: IconButton(
                   onPressed: () => Navigator.of(context).maybePop(),
                   padding: EdgeInsets.zero,
@@ -147,9 +165,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       onSubmitted: (_) => _register(),
                       suffix: _VisibilityToggle(
                         obscured: _obscureConfirm,
-                        onTap: () => setState(
-                          () => _obscureConfirm = !_obscureConfirm,
-                        ),
+                        onTap: () =>
+                            setState(() => _obscureConfirm = !_obscureConfirm),
                       ),
                     ),
                     SizedBox(height: 20.h),
@@ -157,10 +174,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       value: _agreed,
                       onChanged: (value) =>
                           setState(() => _agreed = value ?? false),
-                      onTermsTap: () =>
-                          context.push(AppRoutes.termsOfService),
-                      onPrivacyTap: () =>
-                          context.push(AppRoutes.privacyPolicy),
+                      onTermsTap: () => context.push(AppRoutes.termsOfService),
+                      onPrivacyTap: () => context.push(AppRoutes.privacyPolicy),
                     ),
                     SizedBox(height: 20.h),
                     SizedBox(
@@ -246,8 +261,7 @@ class _AgreementRowState extends State<_AgreementRow> {
   void initState() {
     super.initState();
     _termsRecognizer = TapGestureRecognizer()..onTap = widget.onTermsTap;
-    _privacyRecognizer = TapGestureRecognizer()
-      ..onTap = widget.onPrivacyTap;
+    _privacyRecognizer = TapGestureRecognizer()..onTap = widget.onPrivacyTap;
   }
 
   @override
@@ -279,10 +293,7 @@ class _AgreementRowState extends State<_AgreementRow> {
         Expanded(
           child: Text.rich(
             TextSpan(
-              style: TextStyle(
-                color: AppColors.whiteColor,
-                fontSize: 12.sp,
-              ),
+              style: TextStyle(color: AppColors.whiteColor, fontSize: 12.sp),
               children: [
                 const TextSpan(text: 'Agree with '),
                 TextSpan(
