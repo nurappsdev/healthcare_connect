@@ -152,39 +152,43 @@ class _CompanyHeader extends StatelessWidget {
               ),
               Positioned(
                 bottom: 0,
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12.w,
-                    vertical: 4.h,
-                  ),
-                  decoration: BoxDecoration(
-                    color: _white,
-                    borderRadius: BorderRadius.circular(20.r),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.workspace_premium_outlined,
-                        color: AppColors.accentPurple,
-                        size: 14.r,
-                      ),
-                      SizedBox(width: 4.w),
-                      Text(
-                        'Basic',
-                        style: TextStyle(
-                          color: AppColors.blackColor,
-                          fontSize: 11.sp,
-                          fontWeight: FontWeight.w600,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => context.push(AppRoutes.subscription),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12.w,
+                      vertical: 4.h,
+                    ),
+                    decoration: BoxDecoration(
+                      color: _white,
+                      borderRadius: BorderRadius.circular(20.r),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.workspace_premium_outlined,
+                          color: AppColors.accentPurple,
+                          size: 14.r,
                         ),
-                      ),
-                      SizedBox(width: 4.w),
-                      Icon(
-                        Icons.north_east,
-                        color: AppColors.blackColor,
-                        size: 12.r,
-                      ),
-                    ],
+                        SizedBox(width: 4.w),
+                        Text(
+                          'Basic',
+                          style: TextStyle(
+                            color: AppColors.blackColor,
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        SizedBox(width: 4.w),
+                        Icon(
+                          Icons.north_east,
+                          color: AppColors.blackColor,
+                          size: 12.r,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

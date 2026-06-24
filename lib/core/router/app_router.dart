@@ -37,6 +37,7 @@ import '../../features/recruiter/presentation/pages/company_info_edit_page.dart'
 import '../../features/recruiter/presentation/pages/company_information_page.dart';
 import '../../features/recruiter/presentation/pages/edit_company_profile_page.dart';
 import '../../features/recruiter/presentation/pages/social_link_edit_page.dart';
+import '../../features/recruiter/presentation/pages/subscription_pages.dart';
 import '../../features/recruiter/presentation/pages/post_job_page.dart';
 import '../../features/recruiter/presentation/pages/see_resume_page.dart';
 import '../../features/recruiter/presentation/pages/shortlisted_candidates_page.dart';
@@ -75,6 +76,9 @@ abstract class AppRoutes {
   static const editCompanyProfile = '/edit-company-profile';
   static const companyInfoEdit = '/company-info-edit';
   static const socialLinkEdit = '/social-link-edit';
+  static const subscription = '/subscription';
+  static const subscriptionActive = '/subscription-active';
+  static const subscriptionPlans = '/subscription-plans';
   static const shortlistedCandidates = '/shortlisted-candidates';
   static const messageEmployee = '/message-employee';
   static const privacyPolicy = '/privacy-policy';
@@ -251,6 +255,18 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.socialLinkEdit,
         builder: (context, state) => const SocialLinkEditPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.subscription,
+        builder: (context, state) => const SubscriptionEmptyPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.subscriptionActive,
+        builder: (context, state) => const SubscriptionActivePage(),
+      ),
+      GoRoute(
+        path: AppRoutes.subscriptionPlans,
+        builder: (context, state) => const SubscriptionPlansPage(),
       ),
       GoRoute(
         path: AppRoutes.appliedCandidates,
