@@ -50,7 +50,15 @@ class CompanyProfilePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                Icon(Icons.settings_outlined, color: _white, size: 24.r),
+                GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => context.push(AppRoutes.settings),
+                  child: Icon(
+                    Icons.settings_outlined,
+                    color: _white,
+                    size: 24.r,
+                  ),
+                ),
               ],
             ),
             SizedBox(height: 10.h),
