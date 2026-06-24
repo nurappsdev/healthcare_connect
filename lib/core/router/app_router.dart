@@ -32,6 +32,7 @@ import '../../features/profile/presentation/pages/upload_certificate_page.dart';
 import '../../features/profile/presentation/pages/upload_resume_page.dart';
 import '../../features/recruiter/presentation/pages/applied_candidates_page.dart';
 import '../../features/recruiter/presentation/pages/candidate_profile_page.dart';
+import '../../features/recruiter/presentation/pages/message_employee_page.dart';
 import '../../features/recruiter/presentation/pages/company_information_page.dart';
 import '../../features/recruiter/presentation/pages/post_job_page.dart';
 import '../../features/recruiter/presentation/pages/see_resume_page.dart';
@@ -69,6 +70,7 @@ abstract class AppRoutes {
   static const seeResume = '/see-resume';
   static const candidateProfile = '/candidate-profile';
   static const shortlistedCandidates = '/shortlisted-candidates';
+  static const messageEmployee = '/message-employee';
   static const privacyPolicy = '/privacy-policy';
   static const termsOfService = '/terms-of-service';
   static const userProfile = '/user-profile';
@@ -237,6 +239,14 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.shortlistedCandidates,
         builder: (context, state) => const ShortlistedCandidatesPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.messageEmployee,
+        builder: (context, state) => MessageEmployeePage(
+          args: state.extra is MessageEmployeeArgs
+              ? state.extra as MessageEmployeeArgs
+              : const MessageEmployeeArgs(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.seeResume,

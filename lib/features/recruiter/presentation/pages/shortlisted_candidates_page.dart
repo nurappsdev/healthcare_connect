@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import 'applied_candidates_page.dart';
+import 'message_employee_page.dart';
 
 const _white = AppColors.whiteColor;
 const _border = AppColors.cardBorderColor;
@@ -49,8 +50,7 @@ class ShortlistedCandidatesPage extends StatefulWidget {
       _ShortlistedCandidatesPageState();
 }
 
-class _ShortlistedCandidatesPageState
-    extends State<ShortlistedCandidatesPage> {
+class _ShortlistedCandidatesPageState extends State<ShortlistedCandidatesPage> {
   final Set<int> _selected = {};
 
   bool get _allSelected =>
@@ -96,10 +96,7 @@ class _ShortlistedCandidatesPageState
                       style: TextStyle(color: _white, fontSize: 12.sp),
                     ),
                   ),
-                  _SelectAll(
-                    value: _allSelected,
-                    onToggle: _toggleSelectAll,
-                  ),
+                  _SelectAll(value: _allSelected, onToggle: _toggleSelectAll),
                 ],
               ),
             ),
@@ -114,6 +111,10 @@ class _ShortlistedCandidatesPageState
                     candidate: candidate,
                     selected: _selected.contains(index),
                     onSelectChanged: () => _toggleOne(index),
+                    onTap: () => context.push(
+                      AppRoutes.messageEmployee,
+                      extra: MessageEmployeeArgs(candidate: candidate),
+                    ),
                     onDetails: () => context.push(
                       AppRoutes.seeResume,
                       extra: candidate.name,
@@ -122,7 +123,17 @@ class _ShortlistedCandidatesPageState
                 },
               ),
             ),
-            _NextBar(onNext: () {}),
+            _NextBar(
+              onNext: () {
+                final selected = _selected.toList()..sort();
+                context.push(
+                  AppRoutes.messageEmployee,
+                  extra: MessageEmployeeArgs(
+                    selected: [for (final i in selected) candidates[i]],
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -171,9 +182,7 @@ class _CheckBox extends StatelessWidget {
         border: Border.all(color: value ? _purple : _border),
         borderRadius: BorderRadius.circular(4.r),
       ),
-      child: value
-          ? Icon(Icons.check, color: _white, size: 14.r)
-          : null,
+      child: value ? Icon(Icons.check, color: _white, size: 14.r) : null,
     );
   }
 }
@@ -216,75 +225,81 @@ class _CandidateCard extends StatelessWidget {
     required this.candidate,
     required this.selected,
     required this.onSelectChanged,
+    required this.onTap,
     required this.onDetails,
   });
 
   final AppliedCandidate candidate;
   final bool selected;
   final VoidCallback onSelectChanged;
+  final VoidCallback onTap;
   final VoidCallback onDetails;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(14.r),
-      decoration: BoxDecoration(
-        color: AppColors.blackColor,
-        border: Border.all(color: selected ? _purple : _border),
-        borderRadius: BorderRadius.circular(20.r),
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: onSelectChanged,
-                child: Padding(
-                  padding: EdgeInsets.only(right: 10.w),
-                  child: _CheckBox(value: selected),
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.all(14.r),
+        decoration: BoxDecoration(
+          color: AppColors.blackColor,
+          border: Border.all(color: selected ? _purple : _border),
+          borderRadius: BorderRadius.circular(20.r),
+        ),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: onSelectChanged,
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 10.w),
+                    child: _CheckBox(value: selected),
+                  ),
                 ),
-              ),
-              CircleAvatar(
-                radius: 22.r,
-                backgroundColor: AppColors.darkCardColor,
-                backgroundImage: candidate.photoUrl != null
-                    ? NetworkImage(candidate.photoUrl!)
-                    : null,
-                child: candidate.photoUrl == null
-                    ? Icon(Icons.person, color: _white, size: 24.r)
-                    : null,
-              ),
-              SizedBox(width: 12.w),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      candidate.name,
-                      style: TextStyle(
-                        color: _white,
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    SizedBox(height: 2.h),
-                    Text(
-                      'Appy date : ${candidate.applyDate}',
-                      style: TextStyle(
-                        color: AppColors.lightHintColor,
-                        fontSize: 10.sp,
-                      ),
-                    ),
-                  ],
+                CircleAvatar(
+                  radius: 22.r,
+                  backgroundColor: AppColors.darkCardColor,
+                  backgroundImage: candidate.photoUrl != null
+                      ? NetworkImage(candidate.photoUrl!)
+                      : null,
+                  child: candidate.photoUrl == null
+                      ? Icon(Icons.person, color: _white, size: 24.r)
+                      : null,
                 ),
-              ),
-              _DetailsButton(onTap: onDetails),
-            ],
-          ),
-          SizedBox(height: 14.h),
-          _MatchBar(percent: candidate.matchPercent),
-        ],
+                SizedBox(width: 12.w),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        candidate.name,
+                        style: TextStyle(
+                          color: _white,
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(height: 2.h),
+                      Text(
+                        'Appy date : ${candidate.applyDate}',
+                        style: TextStyle(
+                          color: AppColors.lightHintColor,
+                          fontSize: 10.sp,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                _DetailsButton(onTap: onDetails),
+              ],
+            ),
+            SizedBox(height: 14.h),
+            _MatchBar(percent: candidate.matchPercent),
+          ],
+        ),
       ),
     );
   }
