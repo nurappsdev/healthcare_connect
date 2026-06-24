@@ -7,6 +7,7 @@ import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_constant.dart';
 import '../../../auth/presentation/pages/signup_page.dart';
+import '../../../recruiter/presentation/pages/company_profile_page.dart';
 import '../../../recruiter/presentation/pages/recruiter_jobs_page.dart';
 import '../../../recruiter/presentation/pages/recruiters_home_screen.dart';
 import 'ats_checker_page.dart';
@@ -43,8 +44,8 @@ class _HomePageState extends State<HomePage> {
   static const _recruiterBottomItems = [
     Icons.home_outlined,
     Icons.message_outlined,
-    Icons.article_outlined,
     Icons.work_outline,
+    Icons.person_outline,
   ];
 
   @override
@@ -91,8 +92,8 @@ class _HomePageState extends State<HomePage> {
       ),
       body: switch (_currentIndex) {
         1 => _isRecruiter ? const MessagePage() : const AtsCheckerPage(),
-        2 => _isRecruiter ? const AtsCheckerPage() : const JobsPage(),
-        3 => _isRecruiter ? const RecruiterJobsPage() : const MessagePage(),
+        2 => _isRecruiter ? const RecruiterJobsPage() : const JobsPage(),
+        3 => _isRecruiter ? const CompanyProfilePage() : const MessagePage(),
         _ => _isRecruiter ? const RecruitersHomeScreen() : _buildHomeBody(),
       },
     );

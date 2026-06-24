@@ -33,7 +33,10 @@ import '../../features/profile/presentation/pages/upload_resume_page.dart';
 import '../../features/recruiter/presentation/pages/applied_candidates_page.dart';
 import '../../features/recruiter/presentation/pages/candidate_profile_page.dart';
 import '../../features/recruiter/presentation/pages/message_employee_page.dart';
+import '../../features/recruiter/presentation/pages/company_info_edit_page.dart';
 import '../../features/recruiter/presentation/pages/company_information_page.dart';
+import '../../features/recruiter/presentation/pages/edit_company_profile_page.dart';
+import '../../features/recruiter/presentation/pages/social_link_edit_page.dart';
 import '../../features/recruiter/presentation/pages/post_job_page.dart';
 import '../../features/recruiter/presentation/pages/see_resume_page.dart';
 import '../../features/recruiter/presentation/pages/shortlisted_candidates_page.dart';
@@ -69,6 +72,9 @@ abstract class AppRoutes {
   static const appliedCandidates = '/applied-candidates';
   static const seeResume = '/see-resume';
   static const candidateProfile = '/candidate-profile';
+  static const editCompanyProfile = '/edit-company-profile';
+  static const companyInfoEdit = '/company-info-edit';
+  static const socialLinkEdit = '/social-link-edit';
   static const shortlistedCandidates = '/shortlisted-candidates';
   static const messageEmployee = '/message-employee';
   static const privacyPolicy = '/privacy-policy';
@@ -231,6 +237,20 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.companyInformation,
         builder: (context, state) => const CompanyInformationPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.editCompanyProfile,
+        builder: (context, state) => const EditCompanyProfilePage(),
+      ),
+      GoRoute(
+        path: AppRoutes.companyInfoEdit,
+        builder: (context, state) => CompanyInfoEditPage(
+          subtitle: state.extra as String? ?? 'Write about your company',
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.socialLinkEdit,
+        builder: (context, state) => const SocialLinkEditPage(),
       ),
       GoRoute(
         path: AppRoutes.appliedCandidates,
