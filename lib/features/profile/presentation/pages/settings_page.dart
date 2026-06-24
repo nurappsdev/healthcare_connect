@@ -55,6 +55,7 @@ class SettingsPage extends StatelessWidget {
                   title: 'Logout',
                   message: 'Are you sure you want to logout?',
                   actionLabel: 'Logout',
+                    logOut: () => context.push(AppRoutes.login),
                 ),
               ),
               const Spacer(),
@@ -69,6 +70,7 @@ class SettingsPage extends StatelessWidget {
                     message:
                         'Are you sure you want to delete your account? This action cannot be undone.',
                     actionLabel: 'Delete',
+                    logOut: (){}
                   ),
                   icon: Icon(
                     Icons.delete_outline,
@@ -104,6 +106,7 @@ class SettingsPage extends StatelessWidget {
     required String title,
     required String message,
     required String actionLabel,
+        required VoidCallback logOut,
   }) {
     return showDialog<void>(
       context: context,
@@ -178,7 +181,7 @@ class SettingsPage extends StatelessWidget {
                     child: SizedBox(
                       height: 44.h,
                       child: ElevatedButton(
-                        onPressed: () => Navigator.of(dialogContext).pop(),
+                        onPressed: logOut,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.accentRed,
                           foregroundColor: AppColors.whiteColor,

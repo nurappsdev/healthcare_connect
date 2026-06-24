@@ -8,13 +8,15 @@ class HomeBottomBar extends StatelessWidget {
   const HomeBottomBar({
     required this.currentIndex,
     required this.onChanged,
+    this.items = defaultItems,
     super.key,
   });
 
   final int currentIndex;
   final ValueChanged<int> onChanged;
+  final List<IconData> items;
 
-  static const _items = [
+  static const defaultItems = [
     Icons.home_outlined,
     Icons.article_outlined,
     Icons.work_outline,
@@ -31,11 +33,12 @@ class HomeBottomBar extends StatelessWidget {
     final barHeight = 60.h;
     final navHeight = 75.h; // taller than before so the circle can poke up
 
-    final barTop = navHeight - barHeight;        // bar top, in stack coords
-    final circleCenterY = circleRadius;          // circle has top: 0
-    final guestCenterDy = circleCenterY - barTop; // painter-relative (negative = above edge)
+    final barTop = navHeight - barHeight; // bar top, in stack coords
+    final circleCenterY = circleRadius; // circle has top: 0
+    final guestCenterDy =
+        circleCenterY - barTop; // painter-relative (negative = above edge)
 
-    final selectedIndex = currentIndex.clamp(0, _items.length - 1);
+    final selectedIndex = currentIndex.clamp(0, items.length - 1);
 
     return SizedBox(
       height: navHeight + safeBottom,
@@ -43,7 +46,7 @@ class HomeBottomBar extends StatelessWidget {
         padding: EdgeInsets.only(bottom: safeBottom),
         child: LayoutBuilder(
           builder: (context, constraints) {
-            final itemWidth = constraints.maxWidth / _items.length;
+            final itemWidth = constraints.maxWidth / items.length;
             final targetCenter = (itemWidth * selectedIndex) + (itemWidth / 2);
 
             return TweenAnimationBuilder<double>(
@@ -80,11 +83,11 @@ class HomeBottomBar extends StatelessWidget {
                       bottom: 0,
                       height: barHeight,
                       child: Row(
-                        children: List.generate(_items.length, (index) {
+                        children: List.generate(items.length, (index) {
                           final selected = index == selectedIndex;
                           return Expanded(
                             child: _BottomBarIcon(
-                              icon: _items[index],
+                              icon: items[index],
                               hidden: selected,
                               onTap: () => onChanged(index),
                             ),
@@ -129,11 +132,11 @@ class HomeBottomBar extends StatelessWidget {
                               width: 50.r,
                               alignment: Alignment.center,
                               decoration: const BoxDecoration(
-                                color:  Color(0xFF333333),// green circle
+                                color: Color(0xFF333333), // green circle
                                 shape: BoxShape.circle,
                               ),
                               child: Icon(
-                                _items[selectedIndex],
+                                items[selectedIndex],
                                 key: ValueKey(selectedIndex),
                                 color: _white,
                                 size: 23.r,
@@ -237,15 +240,19 @@ class _NotchedBarPainter extends CustomPainter {
 
     return Path()
       ..moveTo(host.left, host.top + radius)
-      ..arcToPoint(Offset(host.left + radius, host.top),
-          radius: Radius.circular(radius))
+      ..arcToPoint(
+        Offset(host.left + radius, host.top),
+        radius: Radius.circular(radius),
+      )
       ..lineTo(p[0].dx, p[0].dy)
       ..quadraticBezierTo(p[1].dx, p[1].dy, p[2].dx, p[2].dy)
       ..arcToPoint(p[3], radius: Radius.circular(r), clockwise: false)
       ..quadraticBezierTo(p[4].dx, p[4].dy, p[5].dx, p[5].dy)
       ..lineTo(host.right - radius, host.top)
-      ..arcToPoint(Offset(host.right, host.top + radius),
-          radius: Radius.circular(radius))
+      ..arcToPoint(
+        Offset(host.right, host.top + radius),
+        radius: Radius.circular(radius),
+      )
       ..lineTo(host.right, host.bottom)
       ..lineTo(host.left, host.bottom)
       ..close();
@@ -254,8 +261,8 @@ class _NotchedBarPainter extends CustomPainter {
   @override
   bool shouldRepaint(_NotchedBarPainter old) =>
       old.centerX != centerX ||
-          old.notchRadius != notchRadius ||
-          old.guestCenterDy != guestCenterDy ||
-          old.color != color ||
-          old.cornerRadius != cornerRadius;
+      old.notchRadius != notchRadius ||
+      old.guestCenterDy != guestCenterDy ||
+      old.color != color ||
+      old.cornerRadius != cornerRadius;
 }

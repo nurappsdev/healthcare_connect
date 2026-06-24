@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/helpers/prefs_helper.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_constant.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/brand_logo.dart';
+import 'signup_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -26,7 +29,17 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _submit() => context.go(AppRoutes.home);
+  Future<void> _submit() async {
+    // Read the role saved at sign-up and open the app for that role.
+    String roleName;
+    try {
+      roleName = await PrefsHelper.getString(AppConstants.role);
+    } catch (_) {
+      roleName = '';
+    }
+    if (!mounted) return;
+    context.go(AppRoutes.home, extra: SignupRoleX.fromName(roleName));
+  }
 
   @override
   Widget build(BuildContext context) {

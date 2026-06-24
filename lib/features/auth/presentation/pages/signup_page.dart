@@ -10,6 +10,23 @@ import '../../../../core/theme/app_constant.dart';
 /// The role a person selects when signing up.
 enum SignupRole { lookingForWork, hiring, teaching }
 
+extension SignupRoleX on SignupRole {
+  /// Whether this role uses the recruiter (hiring) experience.
+  bool get isRecruiter => this == SignupRole.hiring;
+
+  /// Resolve a role string saved in shared preferences back into an enum.
+  ///
+  /// Returns `null` when nothing usable is stored so callers can fall back to
+  /// the default (job-seeker) experience.
+  static SignupRole? fromName(String? name) {
+    if (name == null || name.isEmpty) return null;
+    for (final role in SignupRole.values) {
+      if (role.name == name) return role;
+    }
+    return null;
+  }
+}
+
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
 

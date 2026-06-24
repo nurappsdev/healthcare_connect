@@ -51,7 +51,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   }
 
   void _goToSetupScreen() {
-    if (widget.role == SignupRole.hiring) {
+    if (widget.role?.isRecruiter ?? false) {
       context.push(AppRoutes.companyInformation);
     } else {
       context.push(AppRoutes.profileInformation);
@@ -59,11 +59,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   }
 
   void _goToRoleHome() {
-    if (widget.role == SignupRole.hiring) {
-      context.go(AppRoutes.home, extra: 'hiring');
-    } else {
-      context.go(AppRoutes.home);
-    }
+    // Open the app for the role chosen at sign-up.
+    context.go(AppRoutes.home, extra: widget.role);
   }
 
   @override

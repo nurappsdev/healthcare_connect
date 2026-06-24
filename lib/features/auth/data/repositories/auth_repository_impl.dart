@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/exceptions.dart';
+import '../../../../core/helpers/prefs_helper.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/network/network_info.dart';
 import '../../domain/entities/user_entity.dart';
@@ -39,6 +40,8 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, void>> signOut() async {
     try {
       await remoteDataSource.signOut();
+      // Clear locally stored data (role, token, profile, etc.) on logout.
+      await PrefsHelper.clear();
       return const Right(null);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));

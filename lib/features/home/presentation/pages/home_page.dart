@@ -6,6 +6,8 @@ import '../../../../core/helpers/prefs_helper.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_constant.dart';
+import '../../../auth/presentation/pages/signup_page.dart';
+import '../../../recruiter/presentation/pages/recruiter_jobs_page.dart';
 import '../../../recruiter/presentation/pages/recruiters_home_screen.dart';
 import 'ats_checker_page.dart';
 import 'jobs_page.dart';
@@ -38,6 +40,13 @@ class _HomePageState extends State<HomePage> {
     'Netflix',
   ];
 
+  static const _recruiterBottomItems = [
+    Icons.home_outlined,
+    Icons.message_outlined,
+    Icons.article_outlined,
+    Icons.work_outline,
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -46,9 +55,11 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _loadRole() async {
     try {
-      final role = await PrefsHelper.getString(AppConstants.role);
+      final roleName = await PrefsHelper.getString(AppConstants.role);
       if (!mounted) return;
-      setState(() => _isRecruiter = widget.isRecruiter || role == 'hiring');
+      final savedIsRecruiter =
+          SignupRoleX.fromName(roleName)?.isRecruiter ?? false;
+      setState(() => _isRecruiter = widget.isRecruiter || savedIsRecruiter);
     } catch (_) {
       if (!mounted) return;
       setState(() => _isRecruiter = widget.isRecruiter);
@@ -74,11 +85,14 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: HomeBottomBar(
         currentIndex: _currentIndex,
         onChanged: (index) => setState(() => _currentIndex = index),
+        items: _isRecruiter
+            ? _recruiterBottomItems
+            : HomeBottomBar.defaultItems,
       ),
       body: switch (_currentIndex) {
-        1 => const AtsCheckerPage(),
-        2 => const JobsPage(),
-        3 => const MessagePage(),
+        1 => _isRecruiter ? const MessagePage() : const AtsCheckerPage(),
+        2 => _isRecruiter ? const AtsCheckerPage() : const JobsPage(),
+        3 => _isRecruiter ? const RecruiterJobsPage() : const MessagePage(),
         _ => _isRecruiter ? const RecruitersHomeScreen() : _buildHomeBody(),
       },
     );

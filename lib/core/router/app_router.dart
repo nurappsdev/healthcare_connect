@@ -30,8 +30,12 @@ import '../../features/profile/presentation/pages/profile_information_page.dart'
 import '../../features/profile/presentation/pages/settings_page.dart';
 import '../../features/profile/presentation/pages/upload_certificate_page.dart';
 import '../../features/profile/presentation/pages/upload_resume_page.dart';
+import '../../features/recruiter/presentation/pages/applied_candidates_page.dart';
+import '../../features/recruiter/presentation/pages/candidate_profile_page.dart';
 import '../../features/recruiter/presentation/pages/company_information_page.dart';
 import '../../features/recruiter/presentation/pages/post_job_page.dart';
+import '../../features/recruiter/presentation/pages/see_resume_page.dart';
+import '../../features/recruiter/presentation/pages/shortlisted_candidates_page.dart';
 import '../../features/recruiter/presentation/pages/upload_license_page.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
 
@@ -61,6 +65,10 @@ abstract class AppRoutes {
   static const signup = '/signup';
   static const createAccount = '/create-account';
   static const companyInformation = '/company-information';
+  static const appliedCandidates = '/applied-candidates';
+  static const seeResume = '/see-resume';
+  static const candidateProfile = '/candidate-profile';
+  static const shortlistedCandidates = '/shortlisted-candidates';
   static const privacyPolicy = '/privacy-policy';
   static const termsOfService = '/terms-of-service';
   static const userProfile = '/user-profile';
@@ -101,12 +109,16 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: AppRoutes.home,
-        builder: (context, state) => HomePage(
-          isRecruiter:
-              state.extra == SignupRole.hiring ||
-              state.extra == 'hiring' ||
-              state.extra == true,
-        ),
+        builder: (context, state) {
+          final extra = state.extra;
+          final isRecruiter =
+              extra is SignupRole && extra.isRecruiter ||
+              SignupRoleX.fromName(extra is String ? extra : null)
+                      ?.isRecruiter ==
+                  true ||
+              extra == true;
+          return HomePage(isRecruiter: isRecruiter);
+        },
       ),
       GoRoute(
         path: AppRoutes.findJob,
@@ -217,6 +229,29 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.companyInformation,
         builder: (context, state) => const CompanyInformationPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.appliedCandidates,
+        builder: (context, state) => const AppliedCandidatesPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.shortlistedCandidates,
+        builder: (context, state) => const ShortlistedCandidatesPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.seeResume,
+        builder: (context, state) => SeeResumePage(
+          candidateName: state.extra as String? ?? 'Mariana Anderson',
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.candidateProfile,
+        builder: (context, state) {
+          final name = state.extra as String?;
+          return CandidateProfilePage(
+            name: name == null || name.isEmpty ? 'David' : name,
+          );
+        },
       ),
       GoRoute(
         path: AppRoutes.privacyPolicy,
