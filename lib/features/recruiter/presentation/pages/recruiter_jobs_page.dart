@@ -77,7 +77,9 @@ class _RecruiterJobsPageState extends State<RecruiterJobsPage> {
           Positioned(
             right: 20.w,
             bottom: 24.h,
-            child: _AddJobButton(onTap: () {}),
+            child: _AddJobButton(
+              onTap: () => context.push(AppRoutes.postJob),
+            ),
           ),
         ],
       ),
