@@ -43,12 +43,14 @@ import '../../features/recruiter/presentation/pages/see_resume_page.dart';
 import '../../features/recruiter/presentation/pages/shortlisted_candidates_page.dart';
 import '../../features/recruiter/presentation/pages/upload_license_page.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
+import '../../features/teacher/presentation/pages/teacher_home_page.dart';
 
 /// Named route paths used across the app.
 abstract class AppRoutes {
   static const splash = '/';
   static const login = '/login';
   static const home = '/home';
+  static const teacherHome = '/teacher-home';
   static const findJob = '/find-job';
   static const jobDetails = '/job-details';
   static const postJob = '/post-job';
@@ -97,6 +99,14 @@ abstract class AppRoutes {
   static const uploadResume = '/upload-resume';
   static const uploadCertificate = '/upload-certificate';
   static const uploadLicense = '/upload-license';
+
+  /// The landing route for a freshly signed-in [role].
+  ///
+  /// Each role opens its own experience: teachers get the job-seeker feed,
+  /// everyone else (job seekers and recruiters) share [home], which branches
+  /// internally on the recruiter flag.
+  static String homeFor(SignupRole? role) =>
+      role == SignupRole.teaching ? teacherHome : home;
 }
 
 /// Application [GoRouter], exposed as a provider so navigation config can be
@@ -131,6 +141,10 @@ final routerProvider = Provider<GoRouter>((ref) {
               extra == true;
           return HomePage(isRecruiter: isRecruiter);
         },
+      ),
+      GoRoute(
+        path: AppRoutes.teacherHome,
+        builder: (context, state) => const TeacherHomePage(),
       ),
       GoRoute(
         path: AppRoutes.findJob,

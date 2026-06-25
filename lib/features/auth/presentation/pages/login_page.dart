@@ -38,7 +38,8 @@ class _LoginPageState extends State<LoginPage> {
       roleName = '';
     }
     if (!mounted) return;
-    context.go(AppRoutes.home, extra: SignupRoleX.fromName(roleName));
+    final role = SignupRoleX.fromName(roleName);
+    context.go(AppRoutes.homeFor(role), extra: role);
   }
 
   @override

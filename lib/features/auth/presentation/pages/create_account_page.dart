@@ -60,7 +60,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
 
   void _goToRoleHome() {
     // Open the app for the role chosen at sign-up.
-    context.go(AppRoutes.home, extra: widget.role);
+    context.go(AppRoutes.homeFor(widget.role), extra: widget.role);
   }
 
   @override
