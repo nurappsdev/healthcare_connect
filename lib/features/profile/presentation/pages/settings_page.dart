@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/helpers/prefs_helper.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
 
@@ -55,7 +56,7 @@ class SettingsPage extends StatelessWidget {
                   title: 'Logout',
                   message: 'Are you sure you want to logout?',
                   actionLabel: 'Logout',
-                    logOut: () => context.push(AppRoutes.login),
+                  logOut: () => _logout(context),
                 ),
               ),
               const Spacer(),
@@ -98,6 +99,19 @@ class SettingsPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  /// Clears all locally stored data (role, tokens, profile) and returns the
+  /// user to the role-selection screen so they can pick a role and sign in
+  /// again from a clean slate.
+  Future<void> _logout(BuildContext context) async {
+    try {
+      await PrefsHelper.clear();
+    } catch (_) {
+      // A failed clear should not trap the user inside the app.
+    }
+    if (!context.mounted) return;
+    context.go(AppRoutes.signup);
   }
 
   Future<void> _showSettingsConfirmDialog(
@@ -181,7 +195,10 @@ class SettingsPage extends StatelessWidget {
                     child: SizedBox(
                       height: 44.h,
                       child: ElevatedButton(
-                        onPressed: logOut,
+                        onPressed: () {
+                          Navigator.of(dialogContext).pop();
+                          logOut();
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.accentRed,
                           foregroundColor: AppColors.whiteColor,
