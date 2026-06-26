@@ -242,7 +242,12 @@ class AdminSupportPage extends StatelessWidget {
             children: [
               const _SettingsHeader(title: 'Admin support'),
               SizedBox(height: 152.h),
-              const _PeopleIllustration(),
+              Image.asset(
+                'assets/supportImg.png',
+                width: double.infinity.w,
+                height: 115.h,
+                fit: BoxFit.cover,
+              ),
               SizedBox(height: 89.h),
               Stack(
                 clipBehavior: Clip.none,
@@ -514,87 +519,6 @@ class _SettingsTile extends StatelessWidget {
             SizedBox(width: 12.w),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _PeopleIllustration extends StatelessWidget {
-  const _PeopleIllustration();
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 210.w,
-      height: 115.h,
-      child: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          Positioned(
-            left: 10.w,
-            bottom: 20.h,
-            child: _Person(size: 58.r),
-          ),
-          Positioned(
-            right: 10.w,
-            bottom: 20.h,
-            child: _Person(size: 58.r),
-          ),
-          Positioned(
-            left: 44.w,
-            bottom: 35.h,
-            child: _Person(size: 72.r),
-          ),
-          Positioned(
-            right: 44.w,
-            bottom: 35.h,
-            child: _Person(size: 72.r),
-          ),
-          Positioned(bottom: 0, child: _Person(size: 103.r)),
-        ],
-      ),
-    );
-  }
-}
-
-class _Person extends StatelessWidget {
-  const _Person({required this.size});
-
-  final double size;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: size,
-      height: size,
-      child: Stack(
-        alignment: Alignment.topCenter,
-        children: [
-          Positioned(
-            top: 0,
-            child: Container(
-              width: size * 0.45,
-              height: size * 0.45,
-              decoration: const BoxDecoration(
-                color: AppColors.whiteColor,
-                shape: BoxShape.circle,
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: Container(
-              width: size,
-              height: size * 0.58,
-              decoration: BoxDecoration(
-                color: AppColors.whiteColor,
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(size * 0.34),
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

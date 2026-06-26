@@ -210,27 +210,34 @@ class _RecruiterHeader extends StatelessWidget {
             ],
           ),
         ),
-        Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Icon(
-              Icons.notifications_none,
-              color: AppColors.whiteColor,
-              size: 25.r,
-            ),
-            Positioned(
-              right: -1.w,
-              top: -3.h,
-              child: CircleAvatar(
-                radius: 6.r,
-                backgroundColor: AppColors.accentRed,
-                child: Text(
-                  '0',
-                  style: TextStyle(color: AppColors.whiteColor, fontSize: 7.sp),
+        GestureDetector(
+          onTap: () => context.push(AppRoutes.notifications),
+          behavior: HitTestBehavior.opaque,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Icon(
+                Icons.notifications_none,
+                color: AppColors.whiteColor,
+                size: 25.r,
+              ),
+              Positioned(
+                right: -1.w,
+                top: -3.h,
+                child: CircleAvatar(
+                  radius: 6.r,
+                  backgroundColor: AppColors.accentRed,
+                  child: Text(
+                    '0',
+                    style: TextStyle(
+                      color: AppColors.whiteColor,
+                      fontSize: 7.sp,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );

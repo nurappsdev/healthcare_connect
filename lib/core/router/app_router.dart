@@ -33,6 +33,7 @@ import '../../features/profile/presentation/pages/upload_resume_page.dart';
 import '../../features/recruiter/presentation/pages/applied_candidates_page.dart';
 import '../../features/recruiter/presentation/pages/candidate_profile_page.dart';
 import '../../features/recruiter/presentation/pages/message_employee_page.dart';
+import '../../features/recruiter/presentation/pages/notifications_page.dart';
 import '../../features/recruiter/presentation/pages/company_info_edit_page.dart';
 import '../../features/recruiter/presentation/pages/company_information_page.dart';
 import '../../features/recruiter/presentation/pages/edit_company_profile_page.dart';
@@ -83,6 +84,7 @@ abstract class AppRoutes {
   static const subscriptionPlans = '/subscription-plans';
   static const shortlistedCandidates = '/shortlisted-candidates';
   static const messageEmployee = '/message-employee';
+  static const notifications = '/notifications';
   static const privacyPolicy = '/privacy-policy';
   static const termsOfService = '/terms-of-service';
   static const userProfile = '/user-profile';
@@ -285,6 +287,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.appliedCandidates,
         builder: (context, state) => const AppliedCandidatesPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.notifications,
+        builder: (context, state) => const NotificationsPage(),
       ),
       GoRoute(
         path: AppRoutes.shortlistedCandidates,
