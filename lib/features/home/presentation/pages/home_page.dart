@@ -94,7 +94,11 @@ class _HomePageState extends State<HomePage> {
         1 => _isRecruiter ? const MessagePage() : const AtsCheckerPage(),
         2 => _isRecruiter ? const RecruiterJobsPage() : const JobsPage(),
         3 => _isRecruiter ? const CompanyProfilePage() : const MessagePage(),
-        _ => _isRecruiter ? const RecruitersHomeScreen() : _buildHomeBody(),
+        _ => _isRecruiter
+            ? RecruitersHomeScreen(
+                onViewJobs: () => setState(() => _currentIndex = 2),
+              )
+            : _buildHomeBody(),
       },
     );
   }

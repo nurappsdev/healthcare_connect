@@ -5,8 +5,46 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
 
-class RecruitersHomeScreen extends StatelessWidget {
-  const RecruitersHomeScreen({super.key});
+class RecruitersHomeScreen extends StatefulWidget {
+  const RecruitersHomeScreen({this.onViewJobs, super.key});
+
+  /// Called when the recruiter taps "View all" on the Total jobs card.
+  final VoidCallback? onViewJobs;
+
+  @override
+  State<RecruitersHomeScreen> createState() => _RecruitersHomeScreenState();
+}
+
+class _RecruitersHomeScreenState extends State<RecruitersHomeScreen> {
+  static const _months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  DateTime _selectedMonth = DateTime(2025, 8);
+
+  String get _selectedMonthLabel =>
+      '${_months[_selectedMonth.month - 1]} ${_selectedMonth.year}';
+
+  Future<void> _pickMonth() async {
+    final picked = await showDialog<DateTime>(
+      context: context,
+      builder: (_) => _MonthPickerDialog(initial: _selectedMonth),
+    );
+    if (picked != null) {
+      setState(() => _selectedMonth = picked);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,17 +63,20 @@ class RecruitersHomeScreen extends StatelessWidget {
                 SizedBox(height: 55.h),
                 Row(
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: _RecruiterStatCard(
                         title: 'Total jobs',
                         value: '65',
+                        onViewAll: widget.onViewJobs,
                       ),
                     ),
                     SizedBox(width: 15.w),
-                    const Expanded(
+                    Expanded(
                       child: _RecruiterStatCard(
                         title: 'Application',
                         value: '65',
+                        onViewAll: () =>
+                            context.push(AppRoutes.appliedCandidates),
                       ),
                     ),
                   ],
@@ -53,29 +94,33 @@ class RecruitersHomeScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Container(
-                      height: 44.h,
-                      padding: EdgeInsets.symmetric(horizontal: 19.w),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24.r),
-                        border: Border.all(color: AppColors.cardBorderColor),
-                      ),
-                      child: Row(
-                        children: [
-                          Text(
-                            'August 2025',
-                            style: TextStyle(
-                              color: AppColors.whiteColor,
-                              fontSize: 12.sp,
+                    GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: _pickMonth,
+                      child: Container(
+                        height: 44.h,
+                        padding: EdgeInsets.symmetric(horizontal: 19.w),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(24.r),
+                          border: Border.all(color: AppColors.cardBorderColor),
+                        ),
+                        child: Row(
+                          children: [
+                            Text(
+                              _selectedMonthLabel,
+                              style: TextStyle(
+                                color: AppColors.whiteColor,
+                                fontSize: 12.sp,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 22.w),
-                          Icon(
-                            Icons.calendar_month_outlined,
-                            color: AppColors.whiteColor,
-                            size: 19.r,
-                          ),
-                        ],
+                            SizedBox(width: 22.w),
+                            Icon(
+                              Icons.calendar_month_outlined,
+                              color: AppColors.whiteColor,
+                              size: 19.r,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -193,10 +238,15 @@ class _RecruiterHeader extends StatelessWidget {
 }
 
 class _RecruiterStatCard extends StatelessWidget {
-  const _RecruiterStatCard({required this.title, required this.value});
+  const _RecruiterStatCard({
+    required this.title,
+    required this.value,
+    this.onViewAll,
+  });
 
   final String title;
   final String value;
+  final VoidCallback? onViewAll;
 
   @override
   Widget build(BuildContext context) {
@@ -232,7 +282,7 @@ class _RecruiterStatCard extends StatelessWidget {
             width: 95.w,
             height: 29.h,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: onViewAll,
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.accentPurple,
                 foregroundColor: AppColors.whiteColor,
@@ -251,6 +301,176 @@ class _RecruiterStatCard extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Month + year picker shown when tapping the analytics month button.
+class _MonthPickerDialog extends StatefulWidget {
+  const _MonthPickerDialog({required this.initial});
+
+  final DateTime initial;
+
+  @override
+  State<_MonthPickerDialog> createState() => _MonthPickerDialogState();
+}
+
+class _MonthPickerDialogState extends State<_MonthPickerDialog> {
+  static const _shortMonths = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+
+  late int _year = widget.initial.year;
+  late int _month = widget.initial.month;
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      backgroundColor: AppColors.blackColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.r),
+        side: const BorderSide(color: AppColors.accentPurple),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(18.r),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                _ArrowButton(
+                  icon: Icons.chevron_left,
+                  onTap: () => setState(() => _year--),
+                ),
+                Expanded(
+                  child: Text(
+                    '$_year',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: AppColors.whiteColor,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                _ArrowButton(
+                  icon: Icons.chevron_right,
+                  onTap: () => setState(() => _year++),
+                ),
+              ],
+            ),
+            SizedBox(height: 16.h),
+            GridView.count(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisCount: 4,
+              mainAxisSpacing: 10.h,
+              crossAxisSpacing: 10.w,
+              childAspectRatio: 1.6,
+              children: List.generate(12, (index) {
+                final monthNo = index + 1;
+                final selected = monthNo == _month;
+                return GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => setState(() => _month = monthNo),
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: selected
+                          ? AppColors.accentPurple
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(10.r),
+                      border: Border.all(color: AppColors.cardBorderColor),
+                    ),
+                    child: Text(
+                      _shortMonths[index],
+                      style: TextStyle(
+                        color: AppColors.whiteColor,
+                        fontSize: 12.sp,
+                        fontWeight:
+                            selected ? FontWeight.w700 : FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                );
+              }),
+            ),
+            SizedBox(height: 18.h),
+            Row(
+              children: [
+                Expanded(
+                  child: TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text(
+                      'Cancel',
+                      style: TextStyle(
+                        color: AppColors.lightHintColor,
+                        fontSize: 13.sp,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10.w),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () =>
+                        Navigator.of(context).pop(DateTime(_year, _month)),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.accentPurple,
+                      foregroundColor: AppColors.whiteColor,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                    ),
+                    child: Text(
+                      'Apply',
+                      style: TextStyle(
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ArrowButton extends StatelessWidget {
+  const _ArrowButton({required this.icon, required this.onTap});
+
+  final IconData icon;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => GestureDetector(
+    behavior: HitTestBehavior.opaque,
+    onTap: onTap,
+    child: Container(
+      width: 36.r,
+      height: 36.r,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.r),
+        border: Border.all(color: AppColors.cardBorderColor),
+      ),
+      child: Icon(icon, color: AppColors.whiteColor, size: 22.r),
+    ),
+  );
 }
 
 class _RecruiterAnalyticsChart extends StatelessWidget {
