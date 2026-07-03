@@ -50,22 +50,22 @@ class _LoginPageState extends State<LoginPage> {
         child: Stack(
           children: [
             // Back button
-            Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
-                child: IconButton(
-                  onPressed: () => Navigator.of(context).maybePop(),
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
-                  icon: Icon(
-                    Icons.chevron_left,
-                    color: AppColors.whiteColor,
-                    size: 28.r,
-                  ),
-                ),
-              ),
-            ),
+            // Align(
+            //   alignment: Alignment.topLeft,
+            //   child: Padding(
+            //     padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
+            //     child: IconButton(
+            //       onPressed: () => Navigator.of(context).maybePop(),
+            //       padding: EdgeInsets.zero,
+            //       constraints: const BoxConstraints(),
+            //       icon: Icon(
+            //         Icons.chevron_left,
+            //         color: AppColors.whiteColor,
+            //         size: 28.r,
+            //       ),
+            //     ),
+            //   ),
+            // ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: Column(

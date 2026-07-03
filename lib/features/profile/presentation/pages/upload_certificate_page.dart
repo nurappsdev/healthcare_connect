@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../widgets/profile_form_field.dart';
 import '../widgets/profile_inputs.dart';
@@ -55,10 +57,12 @@ class _UploadCertificatePageState extends State<UploadCertificatePage> {
                       ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(24.w, 8.h, 24.w, 16.h),
-              child: ProfileSaveButton(onPressed: _save),
-            ),
+
+       Padding(
+                padding: EdgeInsets.fromLTRB(24.w, 8.h, 24.w, 16.h),
+                child: ProfileSaveButton(onPressed: () => context.push(AppRoutes.home),),
+              ),
+
           ],
         ),
       ),
